@@ -1,0 +1,23 @@
+language: python
+
+matrix:
+  include:
+    - python: 3.6
+      env: TOXENV=py36
+    - python: 3.6
+      env: TOXENV=lint
+    - python: 3.5
+      env: TOXENV=py35
+    - python: 2.7
+      env: TOXENV=py27
+
+
+install:
+  - pip install tox-travis
+  - pip install .
+  - pip install -r requirements.txt
+  - pip install -r test-requirements.txt
+
+script:
+  - tox
+
