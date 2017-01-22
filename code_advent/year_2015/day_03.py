@@ -23,3 +23,9 @@ def get_houses(directions):
         position = move(position, direction)
         houses.append(position)
     return len(set(houses))
+
+
+def get_split_houses(directions):
+    """Same as original, but two drivers alternating directions"""
+    # Subtract 1 since they both start at the same house
+    return get_houses(directions[::2]) + get_houses(directions[1::2]) - 1

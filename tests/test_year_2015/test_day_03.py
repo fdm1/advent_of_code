@@ -19,3 +19,12 @@ def test_move(direction, result):
     ))
 def test_get_houses(directions, count):
     assert day_03.get_houses(directions) == count
+
+
+@pytest.mark.parametrize('directions, count', (
+    ('^v', 3),
+    ('^>v<', 3),
+    ('^v^v^v^v^v', 11),
+    ))
+def test_get_split_houses(directions, count):
+    assert day_03.get_split_houses(directions) == count
