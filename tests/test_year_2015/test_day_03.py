@@ -24,6 +24,7 @@ def test_get_houses(directions, count):
 @pytest.mark.parametrize('directions, count', (
     ('^v', 3),
     ('^>v<', 3),
+    ('^>v<<v<', 6),
     ('^v^v^v^v^v', 11),
     ))
 def test_get_split_houses(directions, count):

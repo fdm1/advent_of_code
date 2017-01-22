@@ -15,17 +15,22 @@ def move(point, direction):
     return Point(point.x + 1, point.y)
 
 
-def get_houses(directions):
-    """Return total count of houses touched in series of directions"""
+def get_house_set(directions):
+    """Return list of houses touched in series of directions"""
     position = Point(0, 0)
     houses = [position]
     for direction in directions:
         position = move(position, direction)
         houses.append(position)
-    return len(set(houses))
+    return houses
+
+
+def get_houses(directions):
+    """Get set length from list of houses"""
+    return len(set(get_house_set(directions)))
 
 
 def get_split_houses(directions):
     """Same as original, but two drivers alternating directions"""
     # Subtract 1 since they both start at the same house
-    return get_houses(directions[::2]) + get_houses(directions[1::2]) - 1
+    return len(set(get_house_set(directions[::2]) + get_house_set(directions[1::2])))
