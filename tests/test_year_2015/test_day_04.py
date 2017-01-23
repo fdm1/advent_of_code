@@ -10,6 +10,7 @@ def test_validate_hash(input_str, num_zeros, result):
     assert day_04.validate_hash(input_str, num_zeros) == result
 
 
+@pytest.mark.skip(reason="this is slow and the challenge is complete")
 @pytest.mark.parametrize('prefix, num_zeros, result', (
     ('pqrstuv', 5, 1048970),
     ('abcdef', 5, 609043),
