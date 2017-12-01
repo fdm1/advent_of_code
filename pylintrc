@@ -23,5 +23,5 @@ method-rgx=[a-z_][a-z0-9_]{1,30}$
 variable-rgx=[a-z_][a-z0-9_]{1,30}$
 argument-rgx=[a-z_][a-z0-9_]{1,30}$
 const-rgx=[A-z_][A-z0-9_]{1,30}$
-module-rgx=[a-zA-Z_-]{2,30}$
+module-rgx=[a-zA-Z-0-9_]{2,30}$
 good-names=i,j,k,f,_
