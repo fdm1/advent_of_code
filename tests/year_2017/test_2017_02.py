@@ -7,9 +7,9 @@ from code_advent.year_2017 import day_02
 @pytest.fixture
 def sheet_blob():
     return (
-        "5\t1\t9\t5\n"
-        "7\t5\t3\n"
-        "2\t4\t6\t8"
+        "5\t9\t2\t8\n"
+        "9\t4\t7\t3\n"
+        "3\t8\t6\t5"
     )
 
 
@@ -24,9 +24,18 @@ def input_file(sheet_blob):
 
 
 @pytest.fixture
-def checksum_result():
+def checksum_min_max_result():
     return 18
 
 
-def test_checksum(input_file, checksum_result):
-    assert day_02.checksum(sheet_file=input_file) == checksum_result
+@pytest.fixture
+def checksum_even_divisible_result():
+    return 9
+
+
+def test_checksum_min_max(input_file, checksum_min_max_result):
+    assert day_02.checksum_min_max(sheet_file=input_file) == checksum_min_max_result
+
+
+def test_checksum_even_divisible(input_file, checksum_even_divisible_result):
+    assert day_02.checksum_even_divisible(sheet_file=input_file) == checksum_even_divisible_result
