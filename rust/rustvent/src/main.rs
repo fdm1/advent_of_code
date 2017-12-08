@@ -5,6 +5,7 @@ use std::io::prelude::*;
 use std::fs::File;
 use getopts::Options;
 use std::env;
+use std::collections::HashMap;
 
 
 fn print_usage(program: &str, opts: Options) {
@@ -18,6 +19,15 @@ cargo run -- --year 2017 --day 1 --part 1 some random input
 cargo run -- --year 2017 --day 1 --part 1 -is-file some_random_input_file.txt
 ", program);
     print!("{}", opts.usage(&brief));
+}
+
+
+fn run_puzzle(year: String, day: String, part: String, input: String) {
+	let mut puzzles = HashMap::new();
+	puzzles.insert("2017-1-1".to_string(), year2017::day1::part1);
+
+	let puzzle_key = [year, day, part].join("-");
+	puzzles[&puzzle_key](input)
 }
 
 
@@ -39,9 +49,9 @@ fn main() {
         print_usage(&program, opts);
         return;
     }
-    let year = matches.opt_str("y");
-    let day = matches.opt_str("d");
-    let part = matches.opt_str("p");
+    let year = matches.opt_str("y").unwrap();
+    let day = matches.opt_str("d").unwrap();
+    let part = matches.opt_str("p").unwrap();
     let is_file = matches.opt_present("f");
 	let other_input = matches.free.clone().join(" ").trim().to_string();
 	let input_string = if is_file {
@@ -63,5 +73,7 @@ fn main() {
     println!("
         {}-{} part {}
         puzzle_input: {}
-    ", year.unwrap(), day.unwrap(), part.unwrap(), input_string)
+    ", year, day, part, input_string);
+
+	run_puzzle(year, day, part, input_string)
 }
