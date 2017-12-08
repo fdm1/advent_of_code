@@ -1,4 +1,4 @@
-FROM python:3.6.2-alpine
+FROM python:3.6.2
 
 WORKDIR /code_advent
 COPY requirements.txt .

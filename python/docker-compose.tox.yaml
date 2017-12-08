@@ -1,0 +1,13 @@
+version: '2'
+services:
+  test_container:
+    build:
+      context: '.'
+      dockerfile: Dockerfile
+    environment:
+      - TOXENV
+    volumes:
+      - .:/code_advent
+      - ./ci/pylint.sh:/code_advent/ci/pylint.sh
+    command: 'sh -c "while true; do sleep 5; done"'
+    # command: 'sh -c "pip install -r test-requirements.txt && tox"'
