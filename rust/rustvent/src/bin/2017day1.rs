@@ -1,10 +1,11 @@
-use std::str;
+extern crate rustvent;
 
-pub fn main(part: String, input: String) {
-	let captcha = captcha(&input.trim());
+fn main() {
+	let input = rustvent::get_input().expect("Must provide valid input path");
+	let captcha_neighbors = captcha_neighbors(&input.trim());
 	let captcha_half = captcha_half(&input.trim());
-	if *&part.eq("1") { println!("captcha = {}", captcha); }
-	else {println!("captcha = {}", captcha_half);}
+	println!("captcha_neighbors = {}", captcha_neighbors);
+	println!("captcha_half = {}", captcha_half);
 }
 
 fn string_to_digits(row: &str) -> Vec<u32> {
@@ -12,7 +13,7 @@ fn string_to_digits(row: &str) -> Vec<u32> {
 }
 
 
-fn captcha(row_str: &str) -> u32 {
+fn captcha_neighbors(row_str: &str) -> u32 {
 	let digits = string_to_digits(&row_str);
 	let length = digits.len();
 
@@ -56,13 +57,13 @@ mod day1_tests {
     }
     #[test]
     fn part1() {
-        let x = captcha("1122");
+        let x = captcha_neighbors("1122");
         assert_eq!(3, x);
-        let x = captcha("1111");
+        let x = captcha_neighbors("1111");
         assert_eq!(4, x);
-        let x = captcha("1234");
+        let x = captcha_neighbors("1234");
         assert_eq!(0, x);
-        let x = captcha("91212129");
+        let x = captcha_neighbors("91212129");
         assert_eq!(9, x);
     }
     #[test]
