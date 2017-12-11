@@ -22,12 +22,15 @@ cargo run -- --year 2017 --day 1 --part 1 -is-file some_random_input_file.txt
 }
 
 
+const VALID_PARTS: &'static [&'static str] = &["1", "2"];
+
 fn run_puzzle(year: String, day: String, part: String, input: String) {
 	let mut puzzles = HashMap::new();
-	puzzles.insert("2017-1-1".to_string(), year2017::day1::part1);
-
-	let puzzle_key = [year, day, part].join("-");
-	puzzles[&puzzle_key](input)
+	puzzles.insert("2017-1".to_string(), year2017::day1::main);
+	if VALID_PARTS.contains(&part.as_str()) {
+		let puzzle_key = [year, day].join("-");
+		puzzles[&puzzle_key](part, input)
+	} else { println!("{} is not a valid puzzle part!", part)}
 }
 
 
@@ -39,7 +42,8 @@ fn main() {
     opts.reqopt("y", "year", "year", "year");
     opts.reqopt("d", "day", "day", "day");
     opts.optopt("p", "part", "part", "part");
-    opts.optflag("f", "is-file", "include if input is filename (better for long / multi-line inputs)");
+    opts.optflag("v", "verbose", "Echo input");
+    opts.optflag("f", "is-file", "Include if input is filename (better for long / multi-line inputs)");
     opts.optflag("h", "help", "print this help menu");
     let matches = match opts.parse(&args[1..]) {
         Ok(m) => { m }
@@ -52,6 +56,7 @@ fn main() {
     let year = matches.opt_str("y").unwrap();
     let day = matches.opt_str("d").unwrap();
     let part = matches.opt_str("p").unwrap();
+    let verbose = matches.opt_present("v");
     let is_file = matches.opt_present("f");
 	let other_input = matches.free.clone().join(" ").trim().to_string();
 	let input_string = if is_file {
@@ -70,10 +75,18 @@ fn main() {
 		print_usage(&program, opts);
 		return;
 	};
-    println!("
-        {}-{} part {}
-        puzzle_input: {}
-    ", year, day, part, input_string);
+
+	let line_break = std::iter::repeat("=").take(20).collect::<String>();
+
+    println!("{}-{} part {}", year, day, part);
+	if verbose {
+		println!("
+puzzle_input:
+{}
+{}
+", line_break, input_string);
+}
+	println!("{}", line_break);
 
 	run_puzzle(year, day, part, input_string)
 }
