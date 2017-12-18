@@ -4,8 +4,8 @@ fn main() {
 	let input = rustvent::get_input().expect("Must provide valid input path");
 	let captcha_neighbors = captcha_neighbors(&input.trim());
 	let captcha_half = captcha_half(&input.trim());
-	println!("captcha_neighbors = {}", captcha_neighbors);
-	println!("captcha_half = {}", captcha_half);
+	println!("part 1: captcha_neighbors = {}", captcha_neighbors);
+	println!("part 2: captcha_half = {}", captcha_half);
 }
 
 fn captcha_neighbors(row_str: &str) -> u32 {

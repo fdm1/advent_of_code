@@ -4,8 +4,8 @@ fn main() {
 	let input = rustvent::get_input().expect("Must provide valid input path");
 	let checksum_min_max = checksum_min_max(&input.trim());
 	let checksum_even = checksum_even(&input.trim());
-	println!("checksum_min_max = {:?}", checksum_min_max);
-    println!("checksum_even = {}", checksum_even);
+	println!("part 1: checksum_min_max = {:?}", checksum_min_max);
+    println!("part 2: checksum_even = {}", checksum_even);
 }
 
 fn checksum_min_max(grid: &str) -> u32 {
@@ -40,11 +40,11 @@ fn is_divisible(num: &u32, denom: &u32) -> bool {
 }
 
 #[cfg(test)]
-mod day2_tests {
+mod test_2017day2 {
     use super::*;
 
     #[test]
-    fn is_divisible_returns_bool_if_divisible() {
+    fn test_is_divisible_returns_bool_if_divisible() {
         let (x, y) = (5, 3);
         let res = is_divisible(&x,&y);
         assert_eq!(false, res);
@@ -53,12 +53,12 @@ mod day2_tests {
         assert_eq!(true, res);
     }
     #[test]
-    fn checksum_min_max_returns_sum_of_max_minus_min() {
+    fn test_checksum_min_max_returns_sum_of_max_minus_min() {
         let x = checksum_min_max("5 1 9 5\n7 5 3\n2 4 6 8");
         assert_eq!(18, x);
     }
     #[test]
-    fn checksum_even_returns_sum_of_evenly_divisible() {
+    fn test_checksum_even_returns_sum_of_evenly_divisible() {
         let x = checksum_even("5 9 2 8\n9 4 7 3\n3 8 6 5");
         assert_eq!(9, x);
     }

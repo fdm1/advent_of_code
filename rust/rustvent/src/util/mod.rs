@@ -11,21 +11,21 @@ pub fn string_to_nums(row: &str) -> Vec<u32> {
 }
 
 #[cfg(test)]
-mod util_tests {
+mod test_util {
     use super::*;
 
     #[test]
-    fn split_string_rows_returns_vec_of_strings() {
+    fn test_split_string_rows_returns_vec_of_strings() {
         assert_eq!(
             vec!["1 2", "3 4", "5 6", "7 8"],
             split_string_rows("1 2\n3 4\n5 6\n7 8"));
     }
     #[test]
-    fn string_to_digits_returns_vec_of_digits() {
+    fn test_string_to_digits_returns_vec_of_digits() {
         assert_eq!(vec![1, 1, 2, 2], string_to_digits("1122"));
     }
     #[test]
-    fn string_to_nums_returns_vec_of_int32() {
+    fn test_string_to_nums_returns_vec_of_int32() {
         assert_eq!(vec![12, 23, 42, 2], string_to_nums("12 23 42 2"));
     }
 }
