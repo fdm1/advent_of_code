@@ -1,9 +1,9 @@
+pub mod util;
 use std::fs::File;
 use std::io;
 use std::io::BufReader;
 use std::io::Read;
 use std::env;
-
 
 pub fn get_input() -> Option<String> {
     env::args()

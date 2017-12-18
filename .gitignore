@@ -90,3 +90,5 @@ ENV/
 
 # rust and other compiled things
 **/target
+**/.idea
+*.iml

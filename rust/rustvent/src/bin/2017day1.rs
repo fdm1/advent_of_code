@@ -8,13 +8,8 @@ fn main() {
 	println!("captcha_half = {}", captcha_half);
 }
 
-fn string_to_digits(row: &str) -> Vec<u32> {
-    row.chars().map(|c| c.to_digit(10).unwrap()).collect()
-}
-
-
 fn captcha_neighbors(row_str: &str) -> u32 {
-	let digits = string_to_digits(&row_str);
+	let digits = rustvent::util::string_to_digits(&row_str);
 	let length = digits.len();
 
     digits
@@ -30,7 +25,7 @@ fn captcha_neighbors(row_str: &str) -> u32 {
 }
 
 fn captcha_half(row_str: &str) -> u32 {
-	let digits = string_to_digits(&row_str);
+	let digits = rustvent::util::string_to_digits(&row_str);
 	let length = digits.len();
 	let half = length / 2;
 
@@ -46,35 +41,31 @@ fn captcha_half(row_str: &str) -> u32 {
         })
 }
 
-
 #[cfg(test)]
-mod day1_tests {
+mod test_2017day1 {
     use super::*;
 
-    #[test]
-    fn string_to_digits_returns_vec_of_digits() {
-        assert_eq!(vec![1, 1, 2, 2], string_to_digits("1122"));
-    }
-    #[test]
-    fn part1() {
+    # [test]
+    fn test_capthcha_neighbors_returns_sum_of_matching_neighbors() {
         let x = captcha_neighbors("1122");
-        assert_eq!(3, x);
+        assert_eq ! (3, x);
         let x = captcha_neighbors("1111");
-        assert_eq!(4, x);
+        assert_eq !(4, x);
         let x = captcha_neighbors("1234");
-        assert_eq!(0, x);
+        assert_eq ! (0, x);
         let x = captcha_neighbors("91212129");
-        assert_eq!(9, x);
+        assert_eq ! (9, x);
     }
-    #[test]
-    fn part2() {
+
+    # [test]
+    fn test_captcha_half_returns_sum_of_matches_halfway_around() {
         let x = captcha_half("1122");
-        assert_eq!(0, x);
+        assert_eq ! (0, x);
         let x = captcha_half("1111");
-        assert_eq!(4, x);
+        assert_eq !(4, x);
         let x = captcha_half("1212");
-        assert_eq!(6, x);
+        assert_eq ! (6, x);
         let x = captcha_half("12131415");
-        assert_eq!(4, x);
+        assert_eq ! (4, x);
     }
 }
