@@ -3,7 +3,7 @@ extern crate rustvent;
 
 fn main() {
     let input = rustvent::get_input().expect("Must provide valid input path");
-    let input_num  = rustvent::util::string_to_nums(&input.trim())[0];
+    let input_num  = rustvent::util::string_to_u32_vec(&input.trim())[0];
     let part_1 = get_manhattan_distance(&input_num);
     let part_2 = "undefined";
 

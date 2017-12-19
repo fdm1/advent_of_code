@@ -10,7 +10,7 @@ fn main() {
 
 fn checksum_min_max(grid: &str) -> u32 {
     grid.lines().map(|row| {
-        let mut digits = rustvent::util::string_to_nums(&row);
+        let mut digits = rustvent::util::string_to_u32_vec(&row);
         digits.sort();
         let min = digits.first().unwrap();
         let max = digits.last().unwrap();
@@ -22,7 +22,7 @@ fn checksum_even(grid: &str) -> u32 {
     grid.lines().map(|row| {
         let mut num: u32 = 0;
         let mut denom: u32 = 0;
-        let digits = rustvent::util::string_to_nums(&row);
+        let digits = rustvent::util::string_to_u32_vec(&row);
         for i in &digits {
             for k in &digits {
                 if is_divisible(i, k) {

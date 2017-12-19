@@ -1,12 +1,16 @@
-pub fn split_string_rows(grid: &str) -> Vec<&str> {
-    grid.split("\n").collect()
+pub fn split_string_rows(rows: &str) -> Vec<&str> {
+    rows.split("\n").collect()
 }
 
 pub fn string_to_digits(row: &str) -> Vec<u32> {
     row.chars().map(|c| c.to_digit(10).unwrap()).collect()
 }
 
-pub fn string_to_nums(row: &str) -> Vec<u32> {
+pub fn string_to_i32_vec(row: &str) -> Vec<i32> {
+    row.split_whitespace().map(|i| i.parse().unwrap()).collect()
+}
+
+pub fn string_to_u32_vec(row: &str) -> Vec<u32> {
     row.split_whitespace().map(|i| i.parse().unwrap()).collect()
 }
 
@@ -29,8 +33,12 @@ mod test_util {
         assert_eq!(vec![1, 1, 2, 2], string_to_digits("1122"));
     }
     #[test]
-    fn test_string_to_nums_returns_vec_of_int32() {
-        assert_eq!(vec![12, 23, 42, 2], string_to_nums("12 23 42 2"));
+    fn test_string_to_u32_vec_returns_vec_of_u32() {
+        assert_eq!(vec![12, 23, 42, 2], string_to_u32_vec("12 23 42 2"));
+    }
+    #[test]
+    fn test_string_to_i32_vec_returns_vec_of_u32() {
+        assert_eq!(vec![12, -23, 42, 2], string_to_i32_vec("12 -23 42 2"));
     }
     #[test]
     fn test_string_to_words_returns_vec_of_strings() {

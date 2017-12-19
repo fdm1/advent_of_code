@@ -34,7 +34,7 @@ fn contains_no_duplicate_anagrams(word_vec: Vec<&str>) -> bool {
     let mut new_vec: Vec<Vec<char>> = vec![];
     let orig_size = word_vec.len();
     for word in word_vec.into_iter().map(|word| {
-        let mut char_vec: Vec<char>= word.chars().collect();
+        let mut char_vec: Vec<char> = word.chars().collect();
         char_vec.sort_by(|a, b| b.cmp(a));
 
         char_vec
