@@ -45,19 +45,19 @@ mod test_2017day3 {
     #[test]
     fn test_ring_level_returns_bounds_of_a_numbers_ring() {
         let num = 4;
-        assert_eq!(ring_level(&num), (3, 1, 9));
+        assert_eq!((3, 1,9),ring_level(&num));
         let num = 10;
-        assert_eq!(ring_level(&num), (5, 2, 25));
+        assert_eq!((5,2,25),ring_level(&num));
         let num = 50;
-        assert_eq!(ring_level(&num), (9, 4, 81));
+        assert_eq!((9,4,81),ring_level(&num));
     }
     #[test]
     fn test_get_manhattan_distance_returns_number_of_moves_to_the_center() {
         let num = 4;
-        assert_eq!(get_manhattan_distance(&num), 1);
+        assert_eq!(1, get_manhattan_distance(&num));
         let num = 10;
-        assert_eq!(get_manhattan_distance(&num), 3);
+        assert_eq!(3, get_manhattan_distance(&num));
         let num = 50;
-        assert_eq!(get_manhattan_distance(&num), 7);
+        assert_eq!(7, get_manhattan_distance(&num));
     }
 }

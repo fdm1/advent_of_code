@@ -51,33 +51,33 @@ mod test_2017day4 {
 
     #[test]
     fn test_contains_no_duplicates_returns_true_if_all_strs_in_a_vec_are_unique() {
-        assert_eq!(contains_no_duplicates(vec!("foo", "bar")), true);
-        assert_eq!(contains_no_duplicates(vec!("foo", "bar", "fooo")), true);
-        assert_eq!(contains_no_duplicates(vec!("foo", "bar", "bar")), false);
-        assert_eq!(contains_no_duplicates(vec!("aa", "bb", "cc", "dd", "aa")), false);
-        assert_eq!(contains_no_duplicates(vec!("aa", "bb", "cc", "dd", "aaa")), true);
+        assert_eq!(true, contains_no_duplicates(vec!("foo", "bar")));
+        assert_eq!(true, contains_no_duplicates(vec!("foo", "bar", "fooo")));
+        assert_eq!(false, contains_no_duplicates(vec!("foo", "bar", "bar")));
+        assert_eq!(false, contains_no_duplicates(vec!("aa", "bb", "cc", "dd", "aa")));
+        assert_eq!(true, contains_no_duplicates(vec!("aa", "bb", "cc", "dd", "aaa")));
     }
 
 
     #[test]
     fn test_contains_no_duplicate_anagrams_returns_true_if_all_strs_in_a_vec_are_unique_anagrams() {
-        assert_eq!(contains_no_duplicate_anagrams(vec!("foo", "bar")), true);
-        assert_eq!(contains_no_duplicate_anagrams(vec!("foo", "bar", "fooo")), true);
-        assert_eq!(contains_no_duplicate_anagrams(vec!("foo", "bar", "bar")), false);
-        assert_eq!(contains_no_duplicate_anagrams(vec!("foo", "rab", "bar")), false);
-        assert_eq!(contains_no_duplicate_anagrams(vec!("aa", "bb", "cc", "dd", "aa")), false);
-        assert_eq!(contains_no_duplicate_anagrams(vec!("aa", "bb", "cc", "dd", "aaa")), true);
-        assert_eq!(contains_no_duplicate_anagrams(vec!("abcde", "xyz", "ecdab")), false);
-        assert_eq!(contains_no_duplicate_anagrams(vec!("a", "ab", "abc", "abd", "abf", "abj")), true);
+        assert_eq!(true, contains_no_duplicate_anagrams(vec!("foo", "bar")));
+        assert_eq!(true, contains_no_duplicate_anagrams(vec!("foo", "bar", "fooo")));
+        assert_eq!(false, contains_no_duplicate_anagrams(vec!("foo", "bar", "bar")));
+        assert_eq!(false, contains_no_duplicate_anagrams(vec!("foo", "rab", "bar")));
+        assert_eq!(false, contains_no_duplicate_anagrams(vec!("aa", "bb", "cc", "dd", "aa")));
+        assert_eq!(true, contains_no_duplicate_anagrams(vec!("aa", "bb", "cc", "dd", "aaa")));
+        assert_eq!(false, contains_no_duplicate_anagrams(vec!("abcde", "xyz", "ecdab")));
+        assert_eq!(true, contains_no_duplicate_anagrams(vec!("a", "ab", "abc", "abd", "abf", "abj")));
     }
     #[test]
     fn test_count_unique_word_passphrases_counts_only_phrases_with_unique_words() {
-        assert_eq!(count_unique_word_passphrases("aa bb cc dd ee\naa bb cc dd aa\naa bb cc dd aaa\n", contains_no_duplicates), 2);
-        assert_eq!(count_unique_word_passphrases("aa bb cc dd ee\naa bb cc dd ab\naa bb cc dd aaa\n", contains_no_duplicates), 3);
+        assert_eq!(2, count_unique_word_passphrases("aa bb cc dd ee\naa bb cc dd aa\naa bb cc dd aaa\n", contains_no_duplicates));
+        assert_eq!(3, count_unique_word_passphrases("aa bb cc dd ee\naa bb cc dd ab\naa bb cc dd aaa\n", contains_no_duplicates));
     }
     #[test]
     fn test_count_unique_word_passphrases_counts_only_phrases_with_unique_anagrams() {
-        assert_eq!(count_unique_word_passphrases("foo bar\nfoo bar\nfoo bar", contains_no_duplicate_anagrams), 3);
-        assert_eq!(count_unique_word_passphrases("foo bar\nfoo bar\nfoo bar rab", contains_no_duplicate_anagrams), 2);
+        assert_eq!(2, count_unique_word_passphrases("foo bar\nfoo bar\nfoo bar rab", contains_no_duplicate_anagrams));
+        assert_eq!(3, count_unique_word_passphrases("foo bar\nfoo bar\nfoo bar", contains_no_duplicate_anagrams));
     }
 }
