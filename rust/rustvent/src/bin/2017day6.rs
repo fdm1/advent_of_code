@@ -3,32 +3,31 @@ extern crate rustvent;
 fn main() {
     let input = rustvent::get_input().expect("Must provide valid input path");
     let part_1 = detect_infinite_loop(rustvent::util::string_to_u32_vec(&input));
-    let part_2 = "foo";
+    let part_2 = detect_infinite_loop(part_1.1);
 
-    println!("part 1: detect_infinite_loop: {}", part_1);
-    println!("part 2: {}", part_2);
+    println!("part 1: detect_infinite_loop: {}", part_1.0);
+    println!("part 2: detect_infinite_loop full cycle: {}", part_2.0);
 }
 
 
-fn detect_infinite_loop(input_vec: Vec<u32>) -> u32 {
-    let mut vec_clone = input_vec.clone();
-    let vec_len = vec_clone.len() as u32;
+fn detect_infinite_loop(mut input_vec: Vec<u32>) -> (u32, Vec<u32>) {
+    let vec_len = input_vec.len() as u32;
     let mut step = 0;
     let mut past_results: Vec<Vec<u32>> = vec!();
-    while !&past_results.contains(&vec_clone) {
+    while !&past_results.contains(&input_vec) {
         step = step + 1;
-        past_results.push(vec_clone.clone());
+        past_results.push(input_vec.clone());
 
-        let mut max_index = get_vec_max_index(&vec_clone) as usize;
-        let mut max_val: u32 = vec_clone[max_index];
-        vec_clone[max_index] = 0;
+        let mut max_index = get_vec_max_index(&input_vec) as usize;
+        let mut max_val: u32 = input_vec[max_index];
+        input_vec[max_index] = 0;
         while max_val  > 0  {
             max_index = ((max_index as u32 + 1) % vec_len) as usize;
-            vec_clone[max_index] = vec_clone[max_index] + 1;
+            input_vec[max_index] = input_vec[max_index] + 1;
             max_val = max_val - 1;
         }
     }
-    step
+    (step, input_vec)
 }
 
 fn get_vec_max_index(u32_vec: &Vec<u32>) -> u32 {
@@ -51,6 +50,6 @@ mod test_2017day6 {
     }
     #[test]
     fn test_detect_infinite_loop_returns_the_step_when_an_infinite_loop_begins() {
-        assert_eq!(5, detect_infinite_loop(vec![0, 2, 7, 0]));
+        assert_eq!((5, vec![2, 4, 1, 2]), detect_infinite_loop(vec![0, 2, 7, 0]));
     }
 }
