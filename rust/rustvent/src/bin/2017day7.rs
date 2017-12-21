@@ -1,53 +1,63 @@
 extern crate rustvent;
 extern crate regex;
 use regex::Regex;
-use regex::Captures;
+
+#[derive(Clone,PartialEq,Debug)]
+struct Program {
+    name: String,
+    weight: u32,
+    parents: Vec<String>,
+}
 
 fn main() {
     let input = rustvent::get_input().expect("Must provide valid input path");
     let part_1 = find_base_program(input.lines().collect());
     let part_2 = "bar";
 
-    println!("part 1: find_base_program: {}", part_1);
+    println!("part 1: find_base_program: {}", part_1.name);
     println!("part 2: {}", part_2);
 }
 
-
-fn extract_program(program_input: &str) -> Captures {
+fn extract_program(program_input: &str) -> Program {
     let re = Regex::new(r"^(?P<name>\S*) \((?P<weight>\d*)\)( -> )?(?P<parents>.*)?$").unwrap();
     let caps = re.captures(&program_input).unwrap();
-    caps
+    Program {name: caps["name"].to_string(),
+            weight: caps["weight"].parse().unwrap(),
+            parents: split_parents(&caps["parents"])
+    }
 }
 
 
-fn find_base_program(program_inputs: Vec<&str>) -> String {
+fn find_base_program(program_inputs: Vec<&str>) -> Program {
     // find the only program with parents, but is not listed as a parent by another program
-    let mut candidates: Vec<String> = vec!();
-    let mut parents: Vec<String> = vec!();
+    let mut programs: Vec<Program> = vec!();
     for input in &program_inputs {
         let program = extract_program(&input);
-        if !program["parents"].eq("") {
-            let program_name = &program["name"];
-            candidates.push(program_name.to_string());
+        if !program.parents.first().unwrap().eq("") {
+            programs.push(program);
+        }
+    }
 
-            for parent in split_parents(&program["parents"]){
-                parents.push(parent.to_string());
-            }
+    let p_clone = programs.clone();
+    for program in p_clone {
+        for parent in program.parents {
+            match programs.iter().position(|p| p.name.eq(&parent)) {
+                Some(result) => {
+                    programs.remove(result);
+                    {};
+                },
+                None => {},
+            };
         }
     }
-    for parent in parents {
-        if candidates.contains(&parent) {
-            let index = candidates.iter().position(|x| *x == parent).unwrap();
-            candidates.remove(index);
-        }
-    }
-    assert_eq!(candidates.len(), 1);
-    candidates.first().unwrap().to_string()
+
+    assert_eq!(programs.len(), 1, "More than one base program was found!");
+    programs.first().unwrap().clone()
 }
 
 
-fn split_parents(parents: &str) -> Vec<&str> {
-    parents.split(',').map(|w| w.trim()).collect()
+fn split_parents(parents: &str) -> Vec<String> {
+    parents.split(',').map(|w| w.trim().to_string()).collect()
 }
 
 
@@ -62,15 +72,8 @@ mod test_2017day7 {
     }
     #[test]
     fn test_extract_program_returns_program_components() {
-        let caps = extract_program("foo (100) -> bar, baz");
-        assert_eq!("100", &caps["weight"]);
-        assert_eq!("foo", &caps["name"]);
-        assert_eq!("bar, baz", &caps["parents"]);
-
-        let caps = extract_program("foo (100)");
-        assert_eq!("100", &caps["weight"]);
-        assert_eq!("foo", &caps["name"]);
-        assert_eq!("", &caps["parents"]);
+        assert_eq!(Program{name: "foo".to_string(), weight: 100 as u32, parents: vec!("bar".to_string(), "baz".to_string())}, extract_program("foo (100) -> bar, baz"));
+        assert_eq!(Program{name: "foo".to_string(), weight: 100 as u32, parents: vec!("".to_string())}, extract_program("foo (100)"));
     }
     #[test]
     fn test_find_base_program_returns_the_root_program_name() {
@@ -88,6 +91,6 @@ mod test_2017day7 {
             "ugml (68) -> gyxo, ebii, jptl",
             "gyxo (61)",
             "cntj (57)");
-        assert_eq!("tknk", find_base_program(input_strings));
+        assert_eq!(Program{name:"tknk".to_string(), weight: 41 as u32, parents: vec!("ugml".to_string(), "padx".to_string(), "fwft".to_string())}, find_base_program(input_strings));
     }
 }
