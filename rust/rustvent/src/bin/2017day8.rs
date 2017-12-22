@@ -7,16 +7,18 @@ use regex::Regex;
 fn main() {
     let input = rustvent::get_input().expect("Must provide valid input path");
     let mut registers: HashMap<String, i32> = HashMap::new();
+    let mut max_val = 0;
 
     for instruction in input.lines() {
         parse_instruction(&mut registers, &instruction);
+        let current_max = registers.values().max().unwrap();
+        if current_max > &max_val {max_val = *current_max;}
     }
 
     let part_1 = registers.values().max().unwrap();
-    let part_2 = "bar";
 
     println!("part 1: max_value: {}", part_1);
-    println!("part 2: {}", part_2);
+    println!("part 2: all-time max value: {}", max_val);
 }
 
 fn parse_instruction(registers: &mut HashMap<String, i32>, instruction: &str) {
