@@ -17,12 +17,20 @@ fn score_input(input: &str) -> (u32, u32) {
     for i in input.chars() {
         if !ignore_next {
             match i {
-                '<' => { if in_garbage {garbage_count += 1;}; in_garbage = true; },
+                '<' => {
+                    if in_garbage { garbage_count += 1; };
+                    in_garbage = true;
+                },
                 '>' => { in_garbage = false; },
-                '{' => { if !in_garbage { group += 1;} else {garbage_count += 1;};},
-                '}' => { if !in_garbage {score += group; group -= 1; } else {garbage_count += 1;};},
+                '{' => { if !in_garbage { group += 1; } else { garbage_count += 1; }; },
+                '}' => {
+                    if !in_garbage {
+                        score += group;
+                        group -= 1;
+                    } else { garbage_count += 1; };
+                },
                 '!' => { ignore_next = true; },
-                _ => { if in_garbage {garbage_count += 1;}},
+                _ => { if in_garbage { garbage_count += 1; } },
             }
         } else { ignore_next = false; }
     }
