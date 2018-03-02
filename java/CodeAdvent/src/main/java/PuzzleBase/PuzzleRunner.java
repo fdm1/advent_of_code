@@ -2,25 +2,26 @@ package PuzzleBase;
 
 import java.util.HashMap;
 
+import FileUtils.FileUtils;
 import Year2015.Day1;
 
 public class PuzzleRunner {
   private String year;
   private String day;
-  private String inputPath;
+  private String input;
   private Puzzle puzzleClass;
 
   private static final HashMap<String, Puzzle> puzzleMap;
   static
   {
-    puzzleMap = new HashMap<String, Puzzle>();
+    puzzleMap = new HashMap<>();
     puzzleMap.put("201501", new Day1());
   }
 
   public PuzzleRunner(String year, String day, String inputFile) {
     this.year = year;
     this.day = day;
-    this.inputPath = inputFile;
+    this.input = FileUtils.readTextFile(inputFile);
     setPuzzleClass(year, day);
   }
 
@@ -30,7 +31,8 @@ public class PuzzleRunner {
       System.exit(1);
     }
 
-    puzzleClass.run(inputPath);
+    puzzleClass.runPart1(input);
+    puzzleClass.runPart2(input);
   }
 
   private void setPuzzleClass(String year, String day) {

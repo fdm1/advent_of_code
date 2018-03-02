@@ -1,5 +1,7 @@
 package PuzzleBase;
 
 public interface Puzzle {
-  public void run(String inputFile);
+  void runPart1(String input);
+
+  void runPart2(String input);
 }
