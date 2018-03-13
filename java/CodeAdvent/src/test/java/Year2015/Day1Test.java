@@ -5,8 +5,6 @@ import java.util.HashMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -27,7 +25,7 @@ class Day1Test {
     testInput.put(")())())", -3);
 
     for (String input : testInput.keySet()) {
-      assertEquals(testInput.get(input), runner.processInput(input, FALSE));
+      assertEquals(testInput.get(input), runner.processInput(input, false));
     }
   }
 
@@ -39,7 +37,7 @@ class Day1Test {
     testInput.put("()())", 5);
 
     for (String input : testInput.keySet()) {
-      assertEquals(testInput.get(input), runner.processInput(input, TRUE));
+      assertEquals(testInput.get(input), runner.processInput(input, true));
     }
   }
 }
