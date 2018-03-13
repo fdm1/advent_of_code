@@ -1,0 +1,13 @@
+task test(type: Exec) {
+  commandLine './ci/run_tests.sh'
+}
+
+task unit_test(type: Exec) {
+  environment "TOXENV", "py36"
+  commandLine './ci/run_tests.sh'
+}
+
+task lint(type: Exec) {
+  environment "TOXENV", "lint"
+  commandLine './ci/run_tests.sh'
+}

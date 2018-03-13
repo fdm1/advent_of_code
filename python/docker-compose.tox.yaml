@@ -9,5 +9,5 @@ services:
     volumes:
       - .:/code_advent
       - ./ci/pylint.sh:/code_advent/ci/pylint.sh
-    command: 'sh -c "while true; do sleep 5; done"'
-    # command: 'sh -c "pip install -r test-requirements.txt && tox"'
+    # command: 'sh -c "while true; do sleep 5; done"'
+    command: 'sh -c "pip install -r test-requirements.txt && tox"'

@@ -1,0 +1,9 @@
+rootProject.name = 'CodeAdvent'
+
+include ':java'
+include ':python'
+include ':rust'
+
+project(':java').projectDir = "$rootDir/java/CodeAdvent" as File
+project(':python').projectDir = "$rootDir/python" as File
+project(':rust').projectDir = "$rootDir/rust" as File

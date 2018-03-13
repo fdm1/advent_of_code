@@ -3,14 +3,31 @@ sudo: required
 services:
     - docker
 
-language: python
-
 matrix:
   include:
-    - python: 3.6
-      env: TOXENV=py36
-    - python: 3.6
-      env: TOXENV=lint
+    - python_unit_test:
+      env: TEST=python_unit_test
+      language: python
+      script: ./gradlew python:unit_test
+    - python_pylint:
+      env: TEST=python_lint
+      language: python
+      script: ./gradlew python:lint
+    - java_test:
+      env: TEST=java_test
+      language: java
+      jdk: oraclejdk9
+      script: ./gradlew java:test
+    - rust_test:
+      env: TEST=rust_test
+      language: rust
+      script: ./gradlew rust:test
 
-script:
-  - ./python/ci/run_tests.sh ${TOXENV}
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
