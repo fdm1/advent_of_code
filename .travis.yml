@@ -6,11 +6,12 @@ services:
 matrix:
   include:
     - elixir_test:
-      env: TEST=elixir_test
+      env:
+        - TEST=elixir_test
+        - MIX_EXS=elixir/elixir_advent/mix.exs
       language: elixir
       elixir: 1.7.4
-      env: MIX_HOME=${HOME}/elixir/elixir_advent
-      script: ./gradlew elixir:test
+      script: unset MIX_EXS && ./gradlew elixir:test
     - java_test:
       env: TEST=java_test
       language: java
