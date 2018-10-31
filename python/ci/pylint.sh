@@ -5,7 +5,7 @@ set -eu -o pipefail
 cd $(dirname $0)/..
 BASE_DIR=$(pwd)
 
-LIBS=(code_advent)
+LIBS=(code_advent tests)
 FAILURE=0
 
 for LIB in ${LIBS[@]}; do

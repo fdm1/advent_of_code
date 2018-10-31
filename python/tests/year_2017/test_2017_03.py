@@ -1,3 +1,4 @@
+# pylint: disable=missing-docstring
 import pytest
 
 from code_advent.year_2017 import day_03

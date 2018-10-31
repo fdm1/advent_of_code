@@ -1,9 +1,0 @@
-version: '2'
-services:
-  code_advent:
-    build:
-      context: '.'
-      dockerfile: Dockerfile
-    volumes:
-      - .:/code_advent
-    command: 'sh -c "while true; do sleep 5; done"'

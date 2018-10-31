@@ -15,6 +15,7 @@ def checksum_min_max(sheet_file):
     return result
 
 
+# pylint: disable=inconsistent-return-statements
 def row_divisibles(row):
     """Find two items in a list of integers that are divisible"""
     row = list(row)

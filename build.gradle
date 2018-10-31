@@ -7,7 +7,7 @@
 
 task test_all {
   dependsOn ':java:test'
-  dependsOn ':python:unit_test'
-  dependsOn ':python:lint'
+  dependsOn ':python:pytest'
+  dependsOn ':python:pylint'
   dependsOn ':rust:test'
 }

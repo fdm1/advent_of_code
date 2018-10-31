@@ -5,18 +5,18 @@ services:
 
 matrix:
   include:
-    - python_unit_test:
-      env: TEST=python_unit_test
+    - python_pytest:
+      env: TEST=python_pytest
       language: python
-      script: ./gradlew python:unit_test
+      script: ./gradlew python:pytest
     - python_pylint:
       env: TEST=python_lint
       language: python
-      script: ./gradlew python:lint
+      script: ./gradlew python:pylint
     - java_test:
       env: TEST=java_test
       language: java
-      jdk: oraclejdk9
+      jdk: oraclejdk11
       script: ./gradlew java:test
     - rust_test:
       env: TEST=rust_test

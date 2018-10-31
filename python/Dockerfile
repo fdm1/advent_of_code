@@ -1,9 +1,10 @@
-FROM python:3.6.2
+FROM python:3.7.0
 
 WORKDIR /code_advent
-COPY requirements.txt .
-COPY setup.py .
-COPY code_advent/ code_advent
+COPY test-requirements.txt .
+RUN pip install -r test-requirements.txt
+
+COPY . .
 RUN pip install -e .
 
-CMD ["bash", "-c", 'while true; do sleep 5; done']
+CMD ["/bin/bash", "-c", "while true; do sleep 5; done"]

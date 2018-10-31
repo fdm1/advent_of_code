@@ -2,6 +2,7 @@
 from hashlib import md5
 
 
+# pylint: disable=inconsistent-return-statements
 def validate_hash(input_str, num_zeros):
     """Check if hex md5 starts with '00000'"""
     if md5(input_str.encode('utf-8')).hexdigest().startswith('0'*num_zeros):

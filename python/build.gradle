@@ -1,13 +1,20 @@
-task test(type: Exec) {
-  commandLine './ci/run_tests.sh'
+def imageName = "code_advent_image"
+
+task build(type: Exec) {
+  commandLine "docker",  "build", "-t", imageName, "."
 }
 
-task unit_test(type: Exec) {
-  environment "TOXENV", "py36"
-  commandLine './ci/run_tests.sh'
+task pytest(type: Exec) {
+  dependsOn build
+  commandLine "docker", "run", imageName, "pytest"
 }
 
-task lint(type: Exec) {
-  environment "TOXENV", "lint"
-  commandLine './ci/run_tests.sh'
+task pylint(type: Exec) {
+  dependsOn build
+  commandLine "docker", "run", imageName, "./ci/pylint.sh"
+}
+
+task test() {
+  dependsOn pytest
+  dependsOn pylint
 }
