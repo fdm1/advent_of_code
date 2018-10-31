@@ -8,6 +8,8 @@ matrix:
     - elixir_test:
       env: TEST=elixir_test
       language: elixir
+      elixir: 1.7.4
+      install: cd elixir/elixir_advent; mix local.rebar --force; mix local.hex --force; mix deps.get
       script: ./gradlew elixir:test
     - java_test:
       env: TEST=java_test
