@@ -5,6 +5,15 @@ services:
 
 matrix:
   include:
+    - elixir_test:
+      env: TEST=elixir_test
+      language: elixir
+      script: ./gradlew elixir:test
+    - java_test:
+      env: TEST=java_test
+      language: java
+      jdk: oraclejdk11
+      script: ./gradlew java:test
     - python_pytest:
       env: TEST=python_pytest
       language: python
@@ -13,11 +22,6 @@ matrix:
       env: TEST=python_lint
       language: python
       script: ./gradlew python:pylint
-    - java_test:
-      env: TEST=java_test
-      language: java
-      jdk: oraclejdk11
-      script: ./gradlew java:test
     - rust_test:
       env: TEST=rust_test
       language: rust
