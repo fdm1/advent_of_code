@@ -6,6 +6,7 @@
  */
 
 task test_all {
+  dependsOn ':elixir:test'
   dependsOn ':java:test'
   dependsOn ':python:pytest'
   dependsOn ':python:pylint'
