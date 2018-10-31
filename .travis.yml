@@ -8,7 +8,7 @@ matrix:
     - elixir_test:
       env:
         - TEST=elixir_test
-        - MIX_EXS=${HOME}/elixir/elixir_advent/mix.exs
+        - MIX_EXS=$(pwd)/elixir/elixir_advent/mix.exs
       language: elixir
       elixir: 1.7.4
       script: ./gradlew elixir:test
