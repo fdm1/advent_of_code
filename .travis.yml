@@ -9,6 +9,8 @@ matrix:
       env:
         - TEST=elixir_test
       language: elixir
+      elixir: 1.7.4
+      otp_release: '21.0'
       before_install: cd elixir/elixir_advent
       before_script: cd ${TRAVIS_BUILD_DIR}
       script: ./gradlew elixir:test
