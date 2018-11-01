@@ -8,9 +8,9 @@ matrix:
     - elixir_test:
       env:
         - TEST=elixir_test
-        - MIX_EXS=$(pwd)/elixir/elixir_advent/mix.exs
       language: elixir
-      elixir: 1.7.4
+      before_install: cd elixir/elixir_advent
+      before_script: cd ${TRAVIS_BUILD_DIR}
       script: ./gradlew elixir:test
     - java_test:
       env: TEST=java_test
