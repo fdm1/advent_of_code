@@ -10,6 +10,7 @@ jobs:
       language: elixir
       elixir: 1.7.4
       before_install: cd elixir/elixir_advent
+      install: ""
     - name: "Python Tests"
       if: branch =~ .*python.* OR (branch != "master" AND NOT branch =~ .*(python|rust|elixir|java).*)
       language: python
