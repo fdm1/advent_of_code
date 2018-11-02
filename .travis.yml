@@ -5,13 +5,13 @@ services:
 
 jobs:
   include:
-    allow_failures:
-      - name: "Elixir Tests"
-        if: branch =~ .*elixir.* OR NOT branch =~ .*(python|rust|elixir|java).*
-        language: elixir
-        elixir: 1.7.4
-        env: MIX_EXS="$(pwd)/elixir/elixir_advent/mix.exs"
-        script: ./gradlew elixir:test
+    # Elixir testing in Travis is broken in this repo... will re-attempt resolution later
+    # - name: "Elixir Tests"
+    #   if: branch =~ .*elixir.* OR NOT branch =~ .*(python|rust|elixir|java).*
+    #   language: elixir
+    #   elixir: 1.7.4
+    #   env: MIX_EXS="$(pwd)/elixir/elixir_advent/mix.exs"
+    #   script: ./gradlew elixir:test
 
     - name: "Python Tests"
       if: branch =~ .*python.* OR NOT branch =~ .*(python|rust|elixir|java).*
