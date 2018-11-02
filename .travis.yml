@@ -6,30 +6,31 @@ services:
 jobs:
   include:
     - name: "Elixir Tests"
-      if: branch =~ .*elixir.* OR (branch != "master" AND NOT branch =~ .*(python|rust|elixir|java).*)
+      if: branch =~ .*elixir.* OR NOT branch =~ .*(python|rust|elixir|java).*
       language: elixir
       elixir: 1.7.4
-      before_install: cd elixir/elixir_advent
+      env: MIX_EXS="$(pwd)/elixir/elixir_advent/mix.exs"
+      script: ./gradlew elixir:test
+
     - name: "Python Tests"
-      if: branch =~ .*python.* OR (branch != "master" AND NOT branch =~ .*(python|rust|elixir|java).*)
+      if: branch =~ .*python.* OR NOT branch =~ .*(python|rust|elixir|java).*
       language: python
-      script: ./gradlew python:test
+      script: ./gradlew python:pytest
     - name: "Python Lint"
-      if: branch =~ .*python.* OR (branch != "master" AND NOT branch =~ .*(python|rust|elixir|java).*)
+      if: branch =~ .*python.* OR NOT branch =~ .*(python|rust|elixir|java).*
       language: python
       script: ./gradlew python:pylint
+
     - name: "Java Tests"
-      if: branch =~ .*java.* OR (branch != "master" AND NOT branch =~ .*(python|rust|elixir|java).*)
+      if: branch =~ .*java.* OR NOT branch =~ .*(python|rust|elixir|java).*
       language: java
       jdk: oraclejdk11
       script: ./gradlew java:test
+
     - name: "Rust Tests"
-      if: branch =~ .*rust.* OR (branch != "master" AND NOT branch =~ .*(python|rust|elixir|java).*)
+      if: branch =~ .*rust.* OR NOT branch =~ .*(python|rust|elixir|java).*
       language: rust
       script: ./gradlew rust:test
-    - name: "All Tests"
-      if: branch = "master"
-      script: ./gradlew test
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
