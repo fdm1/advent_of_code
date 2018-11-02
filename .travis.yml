@@ -3,33 +3,33 @@ sudo: required
 services:
     - docker
 
-matrix:
+jobs:
   include:
-    - elixir_test:
-      env:
-        - TEST=elixir_test
+    - name: "Elixir Tests"
       language: elixir
       elixir: 1.7.4
       before_install: cd elixir/elixir_advent
-      script: ./gradlew elixir:test
-    - java_test:
-      env: TEST=java_test
+      if: branch =~ .*elixir.* OR (branch != "master" AND NOT branch =~ .*(python|rust|elixir|java).*)
+    - name: "Python Tests"
+      if: branch =~ .*python.* OR (branch != "master" AND NOT branch =~ .*(python|rust|elixir|java).*)
+      language: python
+      script: ./gradlew python:pytest
+    - name: "Python Lint"
+      if: branch =~ .*python.* OR (branch != "master" AND NOT branch =~ .*(python|rust|elixir|java).*)
+      language: python
+      script: ./gradlew python:pylint
+    - name: "Java Tests"
+      if: branch =~ .*java.* OR (branch != "master" AND NOT branch =~ .*(python|rust|elixir|java).*)
       language: java
       jdk: oraclejdk11
       script: ./gradlew java:test
-    - python_pytest:
-      env: TEST=python_pytest
-      language: python
-      script: ./gradlew python:pytest
-    - python_pylint:
-      env: TEST=python_lint
-      language: python
-      script: ./gradlew python:pylint
-    - rust_test:
-      env: TEST=rust_test
+    - name: "Rust Tests"
+      if: branch =~ .*rust.* OR (branch != "master" AND NOT branch =~ .*(python|rust|elixir|java).*)
       language: rust
       script: ./gradlew rust:test
-
+    - name: "All Tests"
+      if: branch = "master"
+      script: ./gradlew test
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
