@@ -19,8 +19,14 @@ Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_do
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/elixir_advent](https://hexdocs.pm/elixir_advent).
 
-### Add a new year
 
+### Building the executable
+`mix escript.build`
+
+### Running a solution
+After building, `./elixir_advent <year> <day> <part> [input filepath]`
+
+### Add a new year
 Create a new `year_{YYYY}.ex` file in `lib/`
 
 ```
@@ -28,8 +34,13 @@ defmodule ElixirAdvent.Year2015 do
 end
 ```
 
-Start adding files and tests in `year_{YYYY}` and `test/test_year_{YYYY}` directories
+### Add a new day
+`cp day_NN.ex.tpl lib/year_{YYYY}/day_{DD}.ex`
+`cp day_NN_test.exs.tpl test/test_year_{YYYY}/day_{DD}_test.exs`
 
-### run all tests
+### Run all tests
 In `elixir_advent`: `mix test`
 In repo root: `./gradlew elixir:test`
+
+### Interactive console
+`iex -S mix`

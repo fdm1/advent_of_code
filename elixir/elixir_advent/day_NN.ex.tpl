@@ -1,4 +1,4 @@
-# 2015 - Day 1: http://adventofcode.com/2015/day/1
+# YYYY - Day DD: http://adventofcode.com/YYYY/day/D
 
 defmodule ElixirAdvent.Year2015.Day01 do
   def part1(input) do
