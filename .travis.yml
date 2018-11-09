@@ -9,7 +9,8 @@ jobs:
       if: branch =~ .*elixir.* OR NOT branch =~ .*(python|rust|elixir|java).*
       language: elixir
       elixir: 1.7.4
-      env: MIX_EXS="$(pwd)/elixir/elixir_advent/mix.exs"
+      before_install: cd elixir/elixir_advent
+      before_script: cd ${TRAVIS_BUILD_DIR}
       script: ./gradlew elixir:test
 
     - name: "Python Tests"
