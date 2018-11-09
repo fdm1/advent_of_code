@@ -1,8 +1,8 @@
 ### Running Puzzles:
 
-`./scripts/run.sh 2017day1`
+`./scripts/run.sh 2017 1`
 
-Or `./scripts/shell.sh`, and then `cargo run --bin 2017day1 input/2017day1.txt`
+Or `./scripts/shell.sh`, and then `cargo run --bin 2017day1 ../../input/2017/01.txt`
 
 ### Running Tests:
 

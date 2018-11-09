@@ -26,6 +26,8 @@ be found at [https://hexdocs.pm/elixir_advent](https://hexdocs.pm/elixir_advent)
 ### Running a solution
 After building, `./elixir_advent <year> <day> <part> [input filepath]`
 
+OR `run.sh <year> <day> <part> [input file]`
+
 ### Add a new year
 Create a new `year_{YYYY}.ex` file in `lib/`
 

@@ -1,5 +1,8 @@
 package PuzzleBase;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import FileUtils.FileUtils;
@@ -53,7 +56,7 @@ public class PuzzleRunner {
   }
 
   private String defaultInputPath() {
-    return String.format("src/main/resources/inputs/%s/%s.txt", year, day);
+    return String.format("../../inputs/%s/%s.txt", year, day);
   }
 
 }
