@@ -2,19 +2,37 @@
 
 defmodule ElixirAdvent.Year2015.Day01 do
   def part1(input) do
-    reduce_parens(ElixirAdvent.read_input(input), 0)
+    reduce_parens(ElixirAdvent.read_input(input))
   end
 
   def part2(input) do
-    ElixirAdvent.read_input(input)
+    reduce_parens(ElixirAdvent.read_input(input), true)
   end
 
-  def reduce_parens(input, val) do
+  def reduce_parens(input, val, step, stop_at_basement) do
     {head, tail} = String.split_at(input, 1)
-    case head do
-      "(" -> reduce_parens(tail, val + 1)
-      ")" -> reduce_parens(tail, val - 1)
-      "" -> val
+    if stop_at_basement and (val < 0 or head == "") do
+      step 
+    else
+      case head do
+        "(" -> reduce_parens(tail, val + 1, step + 1, stop_at_basement)
+        ")" -> reduce_parens(tail, val - 1, step + 1, stop_at_basement)
+        "" -> val
+      end
     end
   end
+
+  def reduce_parens(input) do
+    reduce_parens(input, 0, 0)
+  end
+
+  def reduce_parens(input, stop_at_basement) when is_boolean(stop_at_basement) do
+    reduce_parens(input, 0, 0, stop_at_basement)
+  end
+
+  def reduce_parens(input, val, step) do
+    reduce_parens(input, val, step, false)
+  end
+
+
 end
