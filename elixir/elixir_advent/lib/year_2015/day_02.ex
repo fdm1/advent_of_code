@@ -1,6 +1,6 @@
-# YYYY - Day DD: http://adventofcode.com/YYYY/day/D
+# 2015 - Day DD: http://adventofcode.com/2015/day/2
 
-defmodule ElixirAdvent.YearYYYY.DayNN do
+defmodule ElixirAdvent.Year2015.Day02 do
   def part1(input) do
     ElixirAdvent.read_input(input)
   end

@@ -11,4 +11,11 @@ defmodule ElixirAdventTest do
 
     File.rm file_path
   end
+
+  test "reading an stdin" do
+    test_content = "this is\n not a filepath"
+
+    input = ElixirAdvent.read_input(test_content)
+    assert input == test_content
+  end
 end
