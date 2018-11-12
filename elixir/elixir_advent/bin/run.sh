@@ -1,7 +1,7 @@
 #! /bin/bash
 set -eu -o pipefail
 
-if [ "$#" -ne 3 ] && ["$#" -ne 4]; then
+if [ "$#" -ne 3 ] && [ "$#" -ne 4 ]; then
     echo "usage: run.sh <year> <day> <part> [input file]"
 fi
 
