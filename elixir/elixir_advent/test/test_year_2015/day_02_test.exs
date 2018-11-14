@@ -3,9 +3,10 @@ defmodule ElixirAdvent.Year2015.Day02Test do
   doctest ElixirAdvent.Year2015.Day02
 
   def test_cases do
+    # [dimension string, paper, ribbon]
     [
-      ["2x3x4", 58],
-      ["1x1x10", 43]
+      ["2x3x4", 58, 34],
+      ["1x1x10", 43, 14]
     ]
   end
 
@@ -26,7 +27,19 @@ defmodule ElixirAdvent.Year2015.Day02Test do
   end
 
   test "part1" do
-    total_sum = Enum.sum(Enum.map(test_cases(), fn(case) -> Enum.at(case, 1) end))
+    total_sum = Enum.sum(Enum.map(test_cases(), fn(test_case) -> Enum.at(test_case, 1) end))
     assert ElixirAdvent.Year2015.Day02.part1(input_string()) == total_sum
+  end
+
+  test "ribbon_for_box" do
+    Enum.map(test_cases(), fn(n) ->
+      dim = Enum.map(String.split(Enum.at(n, 0), "x"), fn(i) -> String.to_integer(i) end)
+      assert ElixirAdvent.Year2015.Day02.ribbon_for_box(dim) == Enum.at(n, 2)
+    end)
+  end
+
+  test "part2" do
+    total_sum = Enum.sum(Enum.map(test_cases(), fn(test_case) -> Enum.at(test_case, 2) end))
+    assert ElixirAdvent.Year2015.Day02.part2(input_string()) == total_sum
   end
 end

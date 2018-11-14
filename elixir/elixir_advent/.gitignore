@@ -23,3 +23,5 @@ erl_crash.dump
 elixir_advent-*.tar
 
 elixir_advent
+
+.elixir_ls/
