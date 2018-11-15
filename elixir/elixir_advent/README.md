@@ -37,8 +37,7 @@ end
 ```
 
 ### Add a new day
-`cp day_NN.ex.tpl lib/year_{YYYY}/day_{DD}.ex`
-`cp day_NN_test.exs.tpl test/test_year_{YYYY}/day_{DD}_test.exs`
+`./bin/create_new_challenge.sh <year> <day>`
 
 ### Run all tests
 In `elixir_advent`: `mix test`

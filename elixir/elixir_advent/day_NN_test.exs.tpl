@@ -1,4 +1,4 @@
-defmodule ElixirAdvent.YearYYYY.DayDDTest do
+defmodule ElixirAdvent.YearYYYY.DayNNTest do
   use ExUnit.Case
-  doctest ElixirAdvent.YearYYYY.DayDD
+  doctest ElixirAdvent.YearYYYY.DayNN
 end

@@ -1,4 +1,4 @@
-# YYYY - Day DD: http://adventofcode.com/YYYY/day/D
+# YYYY - Day NN: http://adventofcode.com/YYYY/day/D
 
 defmodule ElixirAdvent.YearYYYY.DayNN do
   def part1(input) do
