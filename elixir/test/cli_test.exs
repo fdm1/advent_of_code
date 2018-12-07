@@ -17,12 +17,12 @@ defmodule ElixirAdventCLITest do
       assert_called ElixirAdvent.Year2015.Day01.part1("foo")
 
       ElixirAdvent.CLI.main([2015, 1, 1])
-      assert_called ElixirAdvent.Year2015.Day01.part1("../../inputs/2015/01.txt")
+      assert_called ElixirAdvent.Year2015.Day01.part1("../inputs/2015/01.txt")
     end
 
     with_mock ElixirAdvent.Year2020.Day19, [part29: fn(input) -> input end]  do
       ElixirAdvent.CLI.main([2020, 19, 29])
-      assert_called ElixirAdvent.Year2020.Day19.part29("../../inputs/2020/19.txt")
+      assert_called ElixirAdvent.Year2020.Day19.part29("../inputs/2020/19.txt")
     end
   end
 end

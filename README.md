@@ -6,10 +6,10 @@ Repo for working through [Advent of Code](http://adventofcode.com) (and getting 
 ### Running challenges:
 
 #### Java
-`./java/CodeAdvent/bin/run.sh <year> <day> [path/to/input/file.txt]`
+`./java/bin/run.sh <year> <day> [path/to/input/file.txt]`
 
 #### Elixir
-`./elixir/elixir_advent/bin/run.sh <year> <day> <part> [path/to/input/file.txt]`
+`./elixir/bin/run.sh <year> <day> <part> [path/to/input/file.txt]`
 
 #### Rust
 `./rust/scripts/run.sh <year> <day>`

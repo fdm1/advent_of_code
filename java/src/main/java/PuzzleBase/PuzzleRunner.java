@@ -56,7 +56,7 @@ public class PuzzleRunner {
   }
 
   private String defaultInputPath() {
-    return String.format("../../inputs/%s/%s.txt", year, day);
+    return String.format("../inputs/%s/%s.txt", year, day);
   }
 
 }
