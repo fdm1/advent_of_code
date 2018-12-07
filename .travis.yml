@@ -9,7 +9,7 @@ jobs:
       if: branch =~ .*elixir.* OR NOT branch =~ .*(python|rust|elixir|java).*
       language: elixir
       elixir: 1.7.4
-      before_install: cd elixir/elixir_advent
+      before_install: cd elixir
       before_script: cd ${TRAVIS_BUILD_DIR}
       script: ./gradlew elixir:test
 

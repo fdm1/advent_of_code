@@ -7,7 +7,7 @@ defmodule ElixirAdvent.CLI do
   Entrypoint for Advent of Code in Elixir.
   """
 
-  def inputs_dir(), do: "../../inputs"
+  def inputs_dir(), do: "../inputs"
 
   def main(args) do
     year = Enum.at(args, 0)
