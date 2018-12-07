@@ -2,20 +2,14 @@
 
 defmodule ElixirAdvent.Year2015.Day03 do
   def part1(input) do
-    directions = directions_to_list(input)
+    directions = directions_to_list(ElixirAdvent.read_input(input))
 
-    current_position = [0,0]
-    houses = MapSet.new([current_position])
+    reduced = Enum.reduce(directions, [[0, 0], MapSet.new([[0, 0]])], fn direction, acc ->
+      current_position = move(Enum.at(acc, 0), direction)
+      [current_position, MapSet.put(Enum.at(acc, 1), current_position)]
+    end)
 
-    for d <- directions do
-      current_position = move(current_position, d)
-      houses = MapSet.put(houses, current_position)
-      IO.inspect(houses)
-      IO.inspect(current_position)
-    end
-
-    IO.inspect(houses)
-    IO.puts("current size is #{MapSet.size(houses)}")
+    houses = Enum.at(reduced, 1)
     MapSet.size(houses)
   end
 
