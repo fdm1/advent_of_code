@@ -16,7 +16,6 @@ defmodule ElixirAdvent do
     if File.exists?(file_path) do
       File.read!(file_path)
     else
-      IO.puts("Filepath did not exist. Assuming stdin")
       file_path
     end
   end
