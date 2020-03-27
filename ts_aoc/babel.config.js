@@ -1,16 +1,13 @@
 module.exports = {
+  presets: ['@babel/preset-typescript'],
   plugins: [
     [
       'module-resolver',
       {
         root: ['./src'],
-        extensions: [
-          '.ts',
-          '.js',
-          '.json',
-        ],
+        extensions: ['.ts', '.js', '.json'],
         alias: {
-          '@src': './src',
+          '@app': './src',
           '@support': './test/support',
         },
       },
