@@ -13,3 +13,12 @@ export const getInputNumberArray = (year: number, day: number): number[] => {
     return parseInt(n);
   });
 };
+
+export const commaSeparatedNumbersToNumberArray = (year: number, day: number): number[] => {
+  return getInput(year, day)
+    .replace(' ', '')
+    .split(',')
+    .map((n: string) => {
+      return parseInt(n);
+    });
+};

@@ -1,7 +1,7 @@
-import { NumberInNumberOut } from '@test/test-types';
+import { TestCase } from '@test/test-types';
 import { getFuel, getFuelRecursive } from '../../../src/challenges/year-2019/day-01';
 
-const testCases: NumberInNumberOut[] = [
+const testCases: TestCase[] = [
   { input: 12, part1Solution: 2, part2Solution: 2 },
   { input: 14, part1Solution: 2, part2Solution: 2 },
   { input: 1969, part1Solution: 654, part2Solution: 966 },
@@ -9,13 +9,13 @@ const testCases: NumberInNumberOut[] = [
 ];
 
 test('getFuel works', () => {
-  testCases.map((testCase: NumberInNumberOut) => {
+  testCases.map((testCase: TestCase) => {
     expect(getFuel(testCase.input)).toEqual(testCase.part1Solution);
   });
 });
 
 test('getFuelRecursive works', () => {
-  testCases.map((testCase: NumberInNumberOut) => {
+  testCases.map((testCase: TestCase) => {
     expect(getFuelRecursive(testCase.input)).toEqual(testCase.part2Solution);
   });
 });

@@ -1,8 +1,10 @@
 import { year2019day01 } from './challenges/year-2019/day-01';
 import { ChallengeResultFunctions, ChallengeFunction } from 'types';
+import { year2019day02 } from './challenges/year-2019/day-02';
 
 const challengeResults: { [yearDay: string]: ChallengeResultFunctions } = {
   '2019-01': year2019day01,
+  '2019-02': year2019day02,
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
