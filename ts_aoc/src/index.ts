@@ -1,5 +1,5 @@
-import { year2019day1 } from './year-2019/day-1';
-import { ChallengeResultFunctions, ChallengeFunction } from '@app/types';
+import { year2019day1 } from './challenges/year-2019/day-1';
+import { ChallengeResultFunctions, ChallengeFunction } from 'types';
 
 const challengeResults: { [yearDay: string]: ChallengeResultFunctions } = {
   '2019-1': year2019day1,

@@ -1,4 +1,4 @@
-import { NumberInNumberOut } from '../../test-types';
+import { NumberInNumberOut } from '@test/test-types';
 import { getFuel } from '../../../src/challenges/year-2019/day-1';
 
 const testCases: NumberInNumberOut[] = [

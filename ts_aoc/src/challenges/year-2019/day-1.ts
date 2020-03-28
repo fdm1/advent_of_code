@@ -1,6 +1,5 @@
-// import { getInput } from '@app/util';
-import { getInput } from '../../util';
-import { ChallengeResultFunctions } from '@app/types';
+import { getInput } from '../../util/loaders';
+import { ChallengeResultFunctions } from 'types';
 
 export const getFuel = (mass: number): number => {
   return Math.floor(mass / 3) - 2;
