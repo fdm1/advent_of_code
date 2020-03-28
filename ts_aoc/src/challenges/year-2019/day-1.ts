@@ -1,5 +1,6 @@
-import { getInput } from '../../util/loaders';
+import { getInputNumberArray } from '../../util/loaders';
 import { ChallengeResultFunctions } from 'types';
+import { sumNumberArray } from '../../util/array-helpers';
 
 export const getFuel = (mass: number): number => {
   return Math.floor(mass / 3) - 2;
@@ -15,30 +16,22 @@ export const getFuelRecursive = (mass: number): number => {
   return totalFuel;
 };
 
-const input: string = getInput(2019, 1);
+const input: number[] = getInputNumberArray(2019, 1);
 
 const part1 = (): number => {
-  return input
-    .split('\n')
-    .map((n: string) => {
-      return parseInt(n);
-    })
-    .map((mass: number) => {
+  return sumNumberArray(
+    input.map((mass: number) => {
       return getFuel(mass);
-    })
-    .reduce((sum: number, current: number) => sum + current, 0);
+    }),
+  );
 };
 
 const part2 = (): number => {
-  return input
-    .split('\n')
-    .map((n: string) => {
-      return parseInt(n);
-    })
-    .map((mass: number) => {
+  return sumNumberArray(
+    input.map((mass: number) => {
       return getFuelRecursive(mass);
-    })
-    .reduce((sum: number, current: number) => sum + current, 0);
+    }),
+  );
 };
 
 export const year2019day1: ChallengeResultFunctions = {
