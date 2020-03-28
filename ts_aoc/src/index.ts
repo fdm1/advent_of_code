@@ -1,8 +1,8 @@
-import { year2019day1 } from './challenges/year-2019/day-1';
+import { year2019day01 } from './challenges/year-2019/day-01';
 import { ChallengeResultFunctions, ChallengeFunction } from 'types';
 
 const challengeResults: { [yearDay: string]: ChallengeResultFunctions } = {
-  '2019-1': year2019day1,
+  '2019-01': year2019day01,
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -29,5 +29,5 @@ const runChallenge = (year: string, day: string, part: string) => {
   }
 };
 
-const [year, month, day] = process.argv.slice(2);
-runChallenge(year, month, day);
+const [year, day, part] = process.argv.slice(2);
+runChallenge(year, day.padStart(2, '0'), part);

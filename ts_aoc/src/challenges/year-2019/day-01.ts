@@ -34,7 +34,7 @@ const part2 = (): number => {
   );
 };
 
-export const year2019day1: ChallengeResultFunctions = {
+export const year2019day01: ChallengeResultFunctions = {
   part1: part1,
   part2: part2,
 };
