@@ -41,10 +41,6 @@ const part1 = (): number => {
   return processOpcode({ input: challengeInput, noun: 12, verb: 2 })[0];
 };
 
-const getChallengeInput = (): number[] => {
-  return commaSeparatedNumbersToNumberArray(2019, 2);
-};
-
 const part2 = (): string => {
   const target = 19690720;
   const floor = 0;
@@ -56,7 +52,7 @@ const part2 = (): string => {
     verb = floor;
     while (verb < ceiling) {
       try {
-        const output = processOpcode({ input: getChallengeInput(), noun: noun, verb: verb })[0];
+        const output = processOpcode({ input: Object.create(challengeInput), noun: noun, verb: verb })[0];
         if (output == target) {
           console.log(output);
           return `noun: ${noun}, verb: ${verb}, output: ${output}, answer: ${100 * noun + verb}`;
