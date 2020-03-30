@@ -8,7 +8,21 @@ const multiplyCommand = 2;
 const endCommand = 99;
 const challengeInput: number[] = commaSeparatedNumbersToNumberArray(2019, 2);
 
-export const processOpcode = (input: number[], position = 0): number[] => {
+interface OpcodeArgs {
+  input: number[];
+  position?: number;
+  noun?: number;
+  verb?: number;
+}
+
+export const processOpcode = (args: OpcodeArgs): number[] => {
+  const input = args.input;
+  const position = args.position || 0;
+
+  if (args.noun && args.verb) {
+    input[1] = args.noun;
+    input[2] = args.verb;
+  }
   if (input[position] === endCommand) {
     return input;
   }
@@ -20,17 +34,42 @@ export const processOpcode = (input: number[], position = 0): number[] => {
   } else {
     throw new Error(`unknown command ${command}`);
   }
-  return processOpcode(input, position + nextCommandSteps);
+  return processOpcode({ input: input, position: position + nextCommandSteps });
 };
 
 const part1 = (): number => {
-  challengeInput[1] = 12;
-  challengeInput[2] = 2;
-  return processOpcode(challengeInput)[0];
+  return processOpcode({ input: challengeInput, noun: 12, verb: 2 })[0];
 };
 
-const part2 = (): number => {
-  return challengeInput[0];
+const getChallengeInput = (): number[] => {
+  return commaSeparatedNumbersToNumberArray(2019, 2);
+};
+
+const part2 = (): string => {
+  const target = 19690720;
+  const floor = 0;
+  const ceiling = 1000;
+  let noun = floor;
+  let verb = floor;
+
+  while (noun < ceiling) {
+    verb = floor;
+    while (verb < ceiling) {
+      try {
+        const output = processOpcode({ input: getChallengeInput(), noun: noun, verb: verb })[0];
+        if (output == target) {
+          console.log(output);
+          return `noun: ${noun}, verb: ${verb}, output: ${output}, answer: ${100 * noun + verb}`;
+        }
+      } catch (error) {
+        continue;
+      }
+      verb += 1;
+    }
+    noun += 1;
+  }
+
+  return 'no answer found';
 };
 
 export const year2019day02: ChallengeResultFunctions = {
