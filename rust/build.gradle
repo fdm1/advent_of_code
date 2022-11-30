@@ -1,9 +1,0 @@
-task test(type: Exec) {
-  commandLine './scripts/test.sh'
-}
-
-task exec(type: Exec) {
-  commandLine = ["echo", "To start a shell into the rust docker container, run:\n\n\t${projectDir}/scripts/shell.sh"]
-}
-
-task shell(dependsOn: exec)
