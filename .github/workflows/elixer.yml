@@ -33,4 +33,4 @@ jobs:
       working-directory: ./elixer
     - name: Run tests
       run: mix test
-      orking-directory: ./elixer
+      working-directory: ./elixer
