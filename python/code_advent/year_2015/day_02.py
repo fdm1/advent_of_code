@@ -3,19 +3,19 @@
 
 def box_lengths(dimensions):
     """Return list of dimension ints"""
-    return sorted([int(i) for i in dimensions.split('x')])
+    return sorted([int(i) for i in dimensions.split("x")])
 
 
 def get_sides(dimensions):
     """Return sorted list of side areas"""
     lengths = box_lengths(dimensions)
-    return sorted(lengths[i]*lengths[i-1] for i in range(3))
+    return sorted(lengths[i] * lengths[i - 1] for i in range(3))
 
 
 def get_box_paper(dimensions):
     """Return 2*each side plus 1 extra smallest side"""
     sides = get_sides(dimensions)
-    return sum(2*s for s in sides) + sides[0]
+    return sum(2 * s for s in sides) + sides[0]
 
 
 def get_total_paper(boxes):
@@ -26,7 +26,7 @@ def get_total_paper(boxes):
 def get_smallest_side_perimeter(dimensions):
     """Return the smallest perimeter of a box"""
     lengths = box_lengths(dimensions)
-    return lengths[0]*2 + lengths[1]*2
+    return lengths[0] * 2 + lengths[1] * 2
 
 
 def get_cubic_feet(dimensions):

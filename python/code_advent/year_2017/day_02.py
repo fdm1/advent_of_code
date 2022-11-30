@@ -9,7 +9,7 @@ def checksum_min_max(sheet_file):
         sheet_list = f.readlines()
 
         for row in sheet_list:
-            int_row = [int(i) for i in row.split('\t')]
+            int_row = [int(i) for i in row.split("\t")]
             result = result + (max(int_row) - min(int_row))
 
     return result
@@ -21,7 +21,7 @@ def row_divisibles(row):
     row = list(row)
     row_max = max(row)
     for i in sorted(row):
-        for multiplier in range(2, int(row_max/i) + 1):
+        for multiplier in range(2, int(row_max / i) + 1):
             if i * multiplier in row:
                 return (i, i * multiplier)
 
@@ -33,14 +33,14 @@ def checksum_even_divisible(sheet_file):
         sheet_list = f.readlines()
 
         for row in sheet_list:
-            divisibles = row_divisibles(int(i) for i in row.split('\t'))
+            divisibles = row_divisibles(int(i) for i in row.split("\t"))
             if divisibles:
                 result = result + (divisibles[1] / divisibles[0])
     return int(result)
 
 
-if __name__ == '__main__':
-    even = len(sys.argv) > 2 and sys.argv[2].lower() == 'even'
+if __name__ == "__main__":
+    even = len(sys.argv) > 2 and sys.argv[2].lower() == "even"
 
     if not even:
         print(checksum_min_max(sheet_file=sys.argv[1]))

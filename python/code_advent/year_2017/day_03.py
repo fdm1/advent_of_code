@@ -20,10 +20,11 @@ def get_distance(num):
     side_len, level, max_value = ring_level(num)
     while max_value > num:
         max_value = max_value - (side_len - 1)
-    lateral = abs(num - (max_value + int(side_len/2)))
+    lateral = abs(num - (max_value + int(side_len / 2)))
     inwards = level
     return lateral + inwards
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
 
     print(get_distance(sys.argv[1]))
