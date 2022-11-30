@@ -5,7 +5,7 @@ from collections import Counter
 def count_steps(input_str):
     """Count steps up/down ( '(' / ')' )"""
     counter = Counter(input_str)
-    return counter['('] - counter[')']
+    return counter["("] - counter[")"]
 
 
 def detect_basement(input_str):
@@ -13,6 +13,6 @@ def detect_basement(input_str):
     counter = Counter()
     for i in input_str:
         counter += Counter(i)
-        if counter['('] < counter[')']:
+        if counter["("] < counter[")"]:
             break
-    return counter['('] + counter[')']
+    return counter["("] + counter[")"]

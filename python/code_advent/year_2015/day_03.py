@@ -1,16 +1,16 @@
 """ http://adventofcode.com/2015/day/3 """
 from collections import namedtuple
 
-Point = namedtuple('Point', ['x', 'y'])
+Point = namedtuple("Point", ["x", "y"])
 
 
 def move(point, direction):
     """Return new position based on direction"""
-    if direction == '^':
+    if direction == "^":
         return Point(point.x, point.y + 1)
-    if direction == 'v':
+    if direction == "v":
         return Point(point.x, point.y - 1)
-    if direction == '<':
+    if direction == "<":
         return Point(point.x - 1, point.y)
     return Point(point.x + 1, point.y)
 

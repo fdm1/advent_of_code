@@ -1,16 +1,18 @@
 """ http://adventofcode.com/2015/day/5 """
 from string import ascii_lowercase
 
-VOWELS = ['a', 'e', 'i', 'o', 'u']
-BAD_STRINGS = ['ab', 'cd', 'pq', 'xy']
-DOUBLE_LETTERS = [i*2 for i in ascii_lowercase]
+VOWELS = ["a", "e", "i", "o", "u"]
+BAD_STRINGS = ["ab", "cd", "pq", "xy"]
+DOUBLE_LETTERS = [i * 2 for i in ascii_lowercase]
 
 
 def is_good_string(string):
     """Test all the rules"""
-    return (has_three_vowels(string) and
-            not has_bad_string(string) and
-            has_double_letters(string))
+    return (
+        has_three_vowels(string)
+        and not has_bad_string(string)
+        and has_double_letters(string)
+    )
 
 
 def has_three_vowels(string):
