@@ -3,6 +3,8 @@ name: Elixir CI
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - elixir/**
   pull_request:
     branches: [ "main" ]
     paths:
