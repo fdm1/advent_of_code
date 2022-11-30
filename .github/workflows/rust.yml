@@ -3,10 +3,12 @@ name: Rust CI
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - rust/**
   pull_request:
     branches: [ "main" ]
-    # paths:
-    #   - rust/**
+    paths:
+      - rust/**
 
 env:
   CARGO_TERM_COLOR: always
@@ -29,7 +31,6 @@ jobs:
     - name: Build
       run: cargo build --verbose
       working-directory: rust/rustvent
-
     - name: Run tests
       run: cargo test --verbose
       working-directory: rust/rustvent
