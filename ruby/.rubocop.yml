@@ -3,3 +3,9 @@ AllCops:
   NewCops: enable
 Style/Documentation:
   Enabled: false
+Naming/PredicateName:
+  Enabled: false
+Metrics/AbcSize:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
