@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 module Year2022
-  class Day01
-    def initialize(input)
-      @input = input
-    end
-
+  class Day01 < PuzzleBase
     def part1
       current_max = 0
       elf_loads = parse_elf_loads
