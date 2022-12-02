@@ -13,10 +13,6 @@ module AdventOfCode
     def part1
       return unless puzzle_klass
 
-      unless puzzle_instance.respond_to?(:part1)
-        puts "Part 1 not implemented for day #{@day} of #{@year}"
-        return
-      end
       puts "Running day #{@day} of #{@year} part 1..." unless input_path
       puzzle_instance.part1
     end
@@ -24,10 +20,6 @@ module AdventOfCode
     def part2
       return unless puzzle_klass
 
-      unless puzzle_instance.respond_to?(:part2)
-        puts "Part 2 not implemented for day #{@day} of #{@year}"
-        return
-      end
       puts "Running day #{@day} of #{@year} part 2..." unless input_path
       puzzle_instance.part2
     end
