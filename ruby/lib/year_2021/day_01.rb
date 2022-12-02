@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 module Year2021
-  class Day01
-    def initialize(input)
-      @input = input
-    end
-
+  class Day01 < PuzzleBase
     def part1
       res = 0
       input = @input.split("\n")

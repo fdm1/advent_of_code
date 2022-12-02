@@ -15,3 +15,7 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
+
+def puzzle_test_runner(year, day)
+  AdventOfCode::Runner.new(year, day, 'spec/support/test_input')
+end
