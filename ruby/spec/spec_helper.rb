@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'advent_of_code'
+require 'pry'
 
 Dir['../lib/**/*.rb'].each { |file| require file }
 
