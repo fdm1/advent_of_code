@@ -25,6 +25,6 @@ Use the bin script to run a puzzle. It will prompt for a year, day, and part, an
 
 ## Add new puzzle solutions
 
-- Add the a test input file to `test_inputs/puzzle_tests/<YEAR>_<DAY>.txt`)
+- Add the a test input file to `..test_inputs//<YEAR>/<LEFT-PADDED DAY>.txt`)
 - Add a solution in a `.go` file in `pkg/advent_of_code`. The function to solve the problem must be typed `func(string) string`, taking a filename, and returing a string representation of the answer.
 - Add the mapping to the function in `pkg/advent_of_code/puzzle_map.go` with the key as `<YEAR>-<DAY>-<PART>` and the value as the name of the function (e.g. `"2020-1-2": Year2020Day1Part2`)
