@@ -27,7 +27,7 @@ func TestPart2(t *testing.T) {
 }
 
 func TestPart2FilterTakeMore(t *testing.T) {
-  filename := fmt.Sprintf("puzzle_tests/%v_%v", 2021, 3)
+  filename := fmt.Sprintf("%v/%02d", 2021, 3)
   content := aoc_utils.ReadFile(aoc_utils.TestInput(filename))
   input := aoc_utils.InputToSlice(content)
 
@@ -44,7 +44,7 @@ func TestPart2FilterTakeMore(t *testing.T) {
 }
 
 func TestPart2FilterTakeLess(t *testing.T) {
-  filename := fmt.Sprintf("puzzle_tests/%v_%v", 2021, 3)
+  filename := fmt.Sprintf("%v/%02d", 2021, 3)
   content := aoc_utils.ReadFile(aoc_utils.TestInput(filename))
   input := aoc_utils.InputToSlice(content)
 

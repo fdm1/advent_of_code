@@ -12,7 +12,7 @@ printf -v LEFT_PADDED_DAY "%02d" ${DAY}
 PUZZLE_DIR=pkg/advent_of_code/${YEAR}/${LEFT_PADDED_DAY}
 PUZZLE_FILE=${PUZZLE_DIR}/day${DAY}.go
 TEST_FILE=${PUZZLE_DIR}/day${DAY}_test.go
-TEST_INPUT_FILE=test_inputs/puzzle_tests/${YEAR}_${DAY}.txt
+TEST_INPUT_FILE=../test_input/${YEAR}/${LEFT_PADDED_DAY}.txt
 
 PUZZLE_MAP_FILE=pkg/advent_of_code/puzzle_map.go
 IMPORT_BREAKPOINT_STRING="\^\)"

@@ -1,11 +1,15 @@
 package aoc_utils
 
-import "fmt"
+import(
+  "fmt"
+  "strconv"
+)
 
 func TestInput(name string) string {
-  return fmt.Sprintf("../../../../test_inputs/%v.txt", name)
+  return fmt.Sprintf("../../../../../test_input/%v.txt", name)
 }
 
 func InputFile(year string, day string) string {
-  return fmt.Sprintf("puzzle_inputs/year_%v_day_%v.txt", year, day)
+  dayInt, _ := strconv.Atoi(day)
+  return fmt.Sprintf("../inputs/%v/%02d.txt", year, dayInt)
 }
