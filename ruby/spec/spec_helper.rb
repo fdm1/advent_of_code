@@ -18,5 +18,5 @@ RSpec.configure do |config|
 end
 
 def puzzle_test_runner(year, day)
-  AdventOfCode::Runner.new(year, day, 'spec/support/test_input')
+  AdventOfCode::Runner.new(year, day, '../test_input')
 end
