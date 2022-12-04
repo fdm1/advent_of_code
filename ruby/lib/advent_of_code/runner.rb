@@ -14,17 +14,27 @@ module AdventOfCode
       return unless puzzle_klass
 
       puts "Running day #{@day} of #{@year} part 1..." unless input_path
-      puzzle_instance.part1
+      time_run { puzzle_instance.part1 }
     end
 
     def part2
       return unless puzzle_klass
 
       puts "Running day #{@day} of #{@year} part 2..." unless input_path
-      puzzle_instance.part2
+      time_run { puzzle_instance.part2 }
     end
 
     private
+
+    def time_run
+      start = Time.now
+      res = yield
+      if input_path  # tests
+        res
+      else
+        "Result: #{res}\nRun time: (#{Time.now - start} seconds)"
+      end
+    end
 
     def input_data
       @input_data ||= InputLoader.new(year, day, input_path).input_data
