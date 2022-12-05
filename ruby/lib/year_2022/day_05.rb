@@ -11,8 +11,7 @@ module Year2022
     end
 
     def move_per_stack(n_crates, from, to, stacks)
-      stacks[to.to_s] << stacks[from.to_s].pop(n_crates)
-      stacks[to.to_s].flatten!
+      stacks[to.to_s] += stacks[from.to_s].pop(n_crates)
       stacks
     end
 
