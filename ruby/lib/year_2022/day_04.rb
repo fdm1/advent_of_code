@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Year2022
-  class Day04 < PuzzleBase
+  class Day04 < AdventOfCode::PuzzleBase
     def parse_ranges(row)
       range1, range2 = row.split(',')
       range1_parts = range1.split('-').map(&:to_i)

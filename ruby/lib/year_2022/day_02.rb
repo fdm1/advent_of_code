@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Year2022
-  class Day02 < PuzzleBase
+  class Day02 < AdventOfCode::PuzzleBase
     GUIDE = {
       rock: %w[A X],
       paper: %w[B Y],

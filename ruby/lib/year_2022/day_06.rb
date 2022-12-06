@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Year2022
-  class Day06 < PuzzleBase
+  class Day06 < AdventOfCode::PuzzleBase
     def part1
       find_marker(4)
     end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Year2021
-  class Day01 < PuzzleBase
+  class Day01 < AdventOfCode::PuzzleBase
     def part1
       res = 0
       input = @input.split("\n")

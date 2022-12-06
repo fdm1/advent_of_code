@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Year2022
-  class Day05 < PuzzleBase
+  class Day05 < AdventOfCode::PuzzleBase
     def move_per_crate(n_times, from, to, stacks)
       n_times.times do |_i|
         stacks[to.to_s] << stacks[from.to_s].pop

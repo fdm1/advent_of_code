@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Year2022
-  class Day03 < PuzzleBase
+  class Day03 < AdventOfCode::PuzzleBase
     CHARS = ('a'..'z').to_a + ('A'..'Z').to_a
 
     def common_char(row)
