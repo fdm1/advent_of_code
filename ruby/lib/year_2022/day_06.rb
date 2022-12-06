@@ -14,10 +14,7 @@ module Year2022
 
     def find_marker(len)
       chars = @input.chomp.chars
-      (chars.length - len).times do |i|
-        iter_chars = chars[i..(i + len - 1)]
-        return i + len if iter_chars == iter_chars.uniq
-      end
+      (chars.length - len).times { |i| return i + len if chars[i..i + len - 1].uniq.length == len }
     end
   end
 end
