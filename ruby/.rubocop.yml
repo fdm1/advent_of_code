@@ -5,6 +5,8 @@ Style/Documentation:
   Enabled: false
 Naming/PredicateName:
   Enabled: false
+Naming/MethodParameterName:
+  Enabled: false
 Metrics/AbcSize:
   Enabled: false
 Metrics/MethodLength:
@@ -13,3 +15,4 @@ Metrics/CyclomaticComplexity:
   Enabled: false
 Metrics/PerceivedComplexity:
   Enabled: false
+
