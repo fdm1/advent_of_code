@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'advent_of_code'
-require 'pry-byebug'
 
 Dir['../lib/**/*.rb'].each { |file| require file }
 
@@ -17,6 +16,6 @@ RSpec.configure do |config|
   end
 end
 
-def puzzle_test_runner(year, day)
-  AdventOfCode::Runner.new(year, day, '../test_input')
+def puzzle_test_runner(year, day, suffix = nil)
+  AdventOfCode::Runner.new(year, day, '../test_input', suffix)
 end

@@ -5,12 +5,13 @@ require 'httparty'
 
 module AdventOfCode
   class InputLoader
-    attr_reader :year, :day, :input_path
+    attr_reader :year, :day, :input_path, :suffix
 
-    def initialize(year, day, input_path = nil)
+    def initialize(year, day, input_path = nil, suffix = nil)
       @year = year
       @day = day
       @input_path = input_path || '../inputs'
+      @suffix = suffix
     end
 
     def input_data
@@ -54,7 +55,7 @@ module AdventOfCode
     end
 
     def filename
-      "#{input_path}/#{year}/#{format('%02d', day)}.txt"
+      "#{input_path}/#{year}/#{format('%02d', day)}#{suffix ? "_#{suffix}" : ''}.txt"
     end
 
     def url

@@ -2,12 +2,13 @@
 
 module AdventOfCode
   class Runner
-    attr_reader :year, :day, :input_path
+    attr_reader :year, :day, :input_path, :suffix
 
-    def initialize(year, day, input_path = nil)
+    def initialize(year, day, input_path = nil, suffix = nil)
       @year = year
       @day = day
       @input_path = input_path
+      @suffix = suffix
     end
 
     def part1
@@ -37,7 +38,7 @@ module AdventOfCode
     end
 
     def input_data
-      @input_data ||= InputLoader.new(year, day, input_path).input_data
+      @input_data ||= InputLoader.new(year, day, input_path, suffix).input_data
     end
 
     def puzzle_klass
