@@ -1,20 +1,26 @@
+![badge](https://img.shields.io/endpoint?label=Total%20Stars%20%E2%AD%90&url=https%3A%2F%2Fgist.githubusercontent.com%2Ffdm1%2F436cd0ffc26961a48521eb2ce7058d40%2Fraw%2Faoc_stars_total.json)
+
 Repo for working through [Advent of Code](http://adventofcode.com)
 
 Years/languages (some attempts are very meager, maybe just for testing setups before the year started)
 
-- 2015
+
+
+- ![badge](https://img.shields.io/endpoint?label=2015%20Stars%20%E2%AD%90&url=https%3A%2F%2Fgist.githubusercontent.com%2Ffdm1%2F436cd0ffc26961a48521eb2ce7058d40%2Fraw%2Faoc_stars_2015.json)
   - Elixir
   - Python
-- 2017
+- ![badge](https://img.shields.io/endpoint?label=2016%20Stars%20%E2%AD%90&url=https%3A%2F%2Fgist.githubusercontent.com%2Ffdm1%2F436cd0ffc26961a48521eb2ce7058d40%2Fraw%2Faoc_stars_2016.json)
+- ![badge](https://img.shields.io/endpoint?label=2017%20Stars%20%E2%AD%90&url=https%3A%2F%2Fgist.githubusercontent.com%2Ffdm1%2F436cd0ffc26961a48521eb2ce7058d40%2Fraw%2Faoc_stars_2017.json)
   - Python
   - Rust
-- 2019
+- ![badge](https://img.shields.io/endpoint?label=2018%20Stars%20%E2%AD%90&url=https%3A%2F%2Fgist.githubusercontent.com%2Ffdm1%2F436cd0ffc26961a48521eb2ce7058d40%2Fraw%2Faoc_stars_2018.json)
+- ![badge](https://img.shields.io/endpoint?label=2019%20Stars%20%E2%AD%90&url=https%3A%2F%2Fgist.githubusercontent.com%2Ffdm1%2F436cd0ffc26961a48521eb2ce7058d40%2Fraw%2Faoc_stars_2019.json)
   - Typescript
-- 2020
+- ![badge](https://img.shields.io/endpoint?label=2020%20Stars%20%E2%AD%90&url=https%3A%2F%2Fgist.githubusercontent.com%2Ffdm1%2F436cd0ffc26961a48521eb2ce7058d40%2Fraw%2Faoc_stars_2020.json)
   - Go
-- 2021
+- ![badge](https://img.shields.io/endpoint?label=2021%20Stars%20%E2%AD%90&url=https%3A%2F%2Fgist.githubusercontent.com%2Ffdm1%2F436cd0ffc26961a48521eb2ce7058d40%2Fraw%2Faoc_stars_2021.json)
   - Go (record 17 days)
-- 2022
+- ![badge](https://img.shields.io/endpoint?label=2022%20Stars%20%E2%AD%90&url=https%3A%2F%2Fgist.githubusercontent.com%2Ffdm1%2F436cd0ffc26961a48521eb2ce7058d40%2Fraw%2Faoc_stars_2022.json)
   - Ruby
 
 General setup:

@@ -1,0 +1,101 @@
+# Inspired By https://github.com/J0B10/aoc-badges-action#sample-workflow
+name: Gather AOC Stars
+on:
+  push:
+    branches: [ "main" ]
+jobs:
+  gather-stars:
+    runs-on: ubuntu-latest
+    container:
+      image: blacktop/httpie
+    steps:
+    - name: Download Leaderboards
+      run: |
+        for YEAR in `seq 2015 2022`; do
+          http --download GET https://adventofcode.com/$YEAR/leaderboard/private/view/${{ secrets.AOC_USERID }}.json "${{ secrets.AOC_USER_AGENT }}" Cookie:session=${{ secrets.AOC_SESSION }} >> $YEAR.json
+          echo STARS_$YEAR=$(cat $YEAR.json | jq ".members[\"${{ secrets.AOC_USERID }}\"].stars") >> $GITHUB_ENV
+        done
+
+        echo TOTAL_STARS=$(cat *.json | jq ".members[\"${{ secrets.AOC_USERID }}\"].stars" | jq -s '. | add') >> $GITHUB_ENV
+
+    - name: Create Awesome Badge - 2015
+      uses: schneegans/dynamic-badges-action@v1.6.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: ${{ secrets.GIST_ID }}
+        filename: aoc_stars_2015.json
+        label: '2015 Stars'
+        message: ${{ env.STARS_2015 }}
+        color: yellow
+    - name: Create Awesome Badge - 2016
+      uses: schneegans/dynamic-badges-action@v1.6.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: ${{ secrets.GIST_ID }}
+        filename: aoc_stars_2016.json
+        label: '2016 Stars'
+        message: ${{ env.STARS_2016 }}
+        color: yellow
+    - name: Create Awesome Badge - 2017
+      uses: schneegans/dynamic-badges-action@v1.6.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: ${{ secrets.GIST_ID }}
+        filename: aoc_stars_2017.json
+        label: '2017 Stars'
+        message: ${{ env.STARS_2017 }}
+        color: yellow
+    - name: Create Awesome Badge - 2018
+      uses: schneegans/dynamic-badges-action@v1.6.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: ${{ secrets.GIST_ID }}
+        filename: aoc_stars_2018.json
+        label: '2018 Stars'
+        message: ${{ env.STARS_2018 }}
+        color: yellow
+    - name: Create Awesome Badge - 2019
+      uses: schneegans/dynamic-badges-action@v1.6.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: ${{ secrets.GIST_ID }}
+        filename: aoc_stars_2019.json
+        label: '2019 Stars'
+        message: ${{ env.STARS_2019 }}
+        color: yellow
+    - name: Create Awesome Badge - 2020
+      uses: schneegans/dynamic-badges-action@v1.6.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: ${{ secrets.GIST_ID }}
+        filename: aoc_stars_2020.json
+        label: '2020 Stars'
+        message: ${{ env.STARS_2020 }}
+        color: yellow
+    - name: Create Awesome Badge - 2021
+      uses: schneegans/dynamic-badges-action@v1.6.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: ${{ secrets.GIST_ID }}
+        filename: aoc_stars_2021.json
+        label: '2021 Stars'
+        message: ${{ env.STARS_2021 }}
+        color: yellow
+    - name: Create Awesome Badge - 2022
+      uses: schneegans/dynamic-badges-action@v1.6.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: ${{ secrets.GIST_ID }}
+        filename: aoc_stars_2022.json
+        label: '2022 Stars'
+        message: ${{ env.STARS_2022 }}
+        color: yellow
+    - name: Create Awesome Badge - Total
+      uses: schneegans/dynamic-badges-action@v1.6.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: ${{ secrets.GIST_ID }}
+        filename: aoc_stars_total.json
+        label: 'Total Stars'
+        message: ${{ env.TOTAL_STARS }}
+        color: yellow
