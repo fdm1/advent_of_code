@@ -32,10 +32,10 @@ module Year2022
     def draw
       puts("\n\n")
       spaces = [@head] + @tails
-      min_x = (spaces.collect(&:first) + @tail_positions.collect { |i| i[0].to_i }).min - 4
-      max_x = (spaces.collect(&:first) + @tail_positions.collect { |i| i[0].to_i }).max + 4
-      min_y = (spaces.collect(&:last) + @tail_positions.collect { |i| i[-1].to_i }).min - 4
-      max_y = (spaces.collect(&:last) + @tail_positions.collect { |i| i[-1].to_i }).max + 4
+      min_x = (spaces.collect(&:first) + @tail_positions.collect { |i| i.split(',')[0].to_i }).min - 4
+      max_x = (spaces.collect(&:first) + @tail_positions.collect { |i| i.split(',')[0].to_i }).max + 4
+      min_y = (spaces.collect(&:last) + @tail_positions.collect { |i| i.split(',')[-1].to_i }).min - 4
+      max_y = (spaces.collect(&:last) + @tail_positions.collect { |i| i.split(',')[-1].to_i }).max + 4
       (min_y..max_y).each do |y|
         (min_x..max_x).each do |x|
           if @head == [x, y]
