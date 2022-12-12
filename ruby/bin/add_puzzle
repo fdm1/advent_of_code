@@ -1,0 +1,40 @@
+#! /bin/bash
+
+YEAR=$1
+DAY=$2
+
+if [[ -z ${YEAR} || -z ${DAY} ]]; then
+  echo "Usage: ./bin/add_puzzle <YEAR> <DAY>"
+  exit 0
+fi
+
+printf -v LEFT_PADDED_DAY "%02d" ${DAY}
+
+TEST_INPUT_DIR=../test_input/${YEAR}
+TEST_INPUT_FILE=${TEST_INPUT_DIR}/${LEFT_PADDED_DAY}.txt
+
+PUZZLE_DIR=year_${YEAR}
+PUZZLE_FILE=lib/${PUZZLE_DIR}/day_${LEFT_PADDED_DAY}.rb
+TEST_FILE=spec/${PUZZLE_DIR}/day_${LEFT_PADDED_DAY}_spec.rb
+
+if [[ ! -e ${TEST_INPUT_FILE} ]]; then
+  echo Creating test input file for ${YEAR}-${DAY}
+  mkdir -p ${TEST_INPUT_DIR}
+  echo "insert input here" > ${TEST_INPUT_FILE}
+fi
+
+if [[ -e ${PUZZLE_FILE} ]]; then
+  echo ${PUZZLE_FILE} already exists. Aborting
+else
+  mkdir -p ${PUZZLE_DIR}
+  echo Creating files for ${YEAR}-${DAY}
+  cp templates/lib_code.rb.tpl ${PUZZLE_FILE}
+  cp templates/spec_code.rb.tpl ${TEST_FILE}
+
+  perl -i -pe "s/YEAR/${YEAR}/g" ${PUZZLE_FILE}
+  perl -i -pe "s/YEAR/${YEAR}/g" ${TEST_FILE}
+  perl -i -pe "s/LEFT_PADDED_DAY/${LEFT_PADDED_DAY}/g" ${PUZZLE_FILE}
+  perl -i -pe "s/LEFT_PADDED_DAY/${LEFT_PADDED_DAY}/g" ${TEST_FILE}
+  perl -i -pe "s/DAY/${DAY}/g" ${PUZZLE_FILE}
+  perl -i -pe "s/DAY/${DAY}/g" ${TEST_FILE}
+fi
