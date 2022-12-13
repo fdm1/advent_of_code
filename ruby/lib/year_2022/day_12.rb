@@ -8,52 +8,16 @@ module Year2022
     end
 
     def part1
-      start, visited = run_search! { |node| part1_done?(node) }
-      length(visited, start)
+      bfs = AdventOfCode::Algorithms::BFS.new(endpoint: @end.join(','), starting_points: [@start.join(',')])
+      bfs.run_search! { |node| available_nodes(node) }
     end
 
     def part2
-      start, visited = run_search! { |node| part2_done?(node) }
-      length(visited, start)
+      bfs = AdventOfCode::Algorithms::BFS.new(endpoint: @end.join(','), starting_points: @low_points)
+      bfs.run_search! { |node| available_nodes(node) }
     end
 
     private
-
-    def part1_done?(node)
-      node == @start.join(',')
-    end
-
-    def part2_done?(node)
-      x, y = node.split(',').map(&:to_i)
-      (@grid[x][y]).zero?
-    end
-
-    def run_search!
-      visited = { @end.join(',') => nil }
-      queue = [@end.join(',')]
-      until queue.empty?
-        current_node = queue.shift
-        return current_node, visited if yield(current_node)
-
-        next_nodes = available_nodes(current_node)
-        next_nodes.map! do |node|
-          unless visited.keys.include?(node.join(','))
-            visited[node.join(',')] = current_node
-            queue << node.join(',')
-          end
-        end
-      end
-    end
-
-    def length(visited, start_node)
-      trail_length = 0
-      node = visited[start_node]
-      while node
-        node = visited[node]
-        trail_length += 1
-      end
-      trail_length
-    end
 
     def available_nodes(node)
       x, y = node.split(',').map(&:to_i)
@@ -67,13 +31,15 @@ module Year2022
     end
 
     def parse_grid
-      @grid = @input.split("\n").each_with_index.map do |row_chars, row|
+      @low_points = []
+      @grid = @input.split("\n").each_with_index.map do |row_chars, x|
         chars = row_chars.chars
-        @start ||= chars.find_index('S') ? [row, chars.find_index('S')] : nil
-        @end ||= chars.find_index('E') ? [row, chars.find_index('E')] : nil
-        chars.map do |char|
+        chars.each_with_index.map do |char, y|
+          @start ||= char == 'S' ? [x, y] : nil
+          @end ||= char == 'E' ? [x, y] : nil
           char = 'a' if char == 'S'
           char = 'z' if char == 'E'
+          @low_points << [x, y].join(',') if char == 'a'
           ('a'..'z').to_a.find_index(char)
         end
       end
