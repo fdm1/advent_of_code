@@ -25,31 +25,19 @@ module Year2022
       @input.split("\n").each do |row|
         direction, spaces = row.split
         move_head(direction, spaces)
+        # draw
       end
       @tail_positions.length
     end
 
     def draw
-      puts("\n\n")
-      spaces = [@head] + @tails
-      min_x = (spaces.collect(&:first) + @tail_positions.collect { |i| i.split(',')[0].to_i }).min - 4
-      max_x = (spaces.collect(&:first) + @tail_positions.collect { |i| i.split(',')[0].to_i }).max + 4
-      min_y = (spaces.collect(&:last) + @tail_positions.collect { |i| i.split(',')[-1].to_i }).min - 4
-      max_y = (spaces.collect(&:last) + @tail_positions.collect { |i| i.split(',')[-1].to_i }).max + 4
-      (min_y..max_y).to_a.reverse.each do |y|
-        (min_x..max_x).each do |x|
-          if @head == [x, y]
-            print 'H'
-          elsif @tail_positions.include?([x, y].join(','))
-            print '#' # 'X'
-          elsif @tails.include?([x, y])
-            print @tails.find_index([x, y]) + 1
-          else
-            print '.'
-          end
-        end
-        puts
-      end
+      special_points = { @head => 'H' }
+      @tails.to_a.each_with_index { |tail, i| special_points[tail] = (i + 1).to_s }
+      tail_positions = @tail_positions.to_a.map { |p| p.split(',').map(&:to_i) }
+      AdventOfCode::GridDrawer.new(
+        points: special_points.keys + tail_positions,
+        special_points:
+      ).draw
     end
 
     def move_head(direction, spaces)
