@@ -15,14 +15,15 @@ module Year2022
     private
 
     def available_nodes(node)
-      x, y = node.split(',').map(&:to_i)
+      node = node.split(',') if node.is_a?(String)
+      x, y = node.map(&:to_i)
       height = @grid[x][y]
       nodes = []
       nodes << [x - 1, y] if x.positive?
       nodes << [x + 1, y] if x < @grid.size - 1
       nodes << [x, y - 1] if y.positive?
       nodes << [x, y + 1] if y < @grid.first.size - 1
-      nodes.filter { |grid_node| @grid[grid_node[0]][grid_node[1]] >= (height - 1) }
+      nodes.filter { |grid_node| @grid[grid_node[0]][grid_node[1]] >= (height - 1) }.map {|n| n.join(",")}
     end
 
     def setup

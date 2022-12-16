@@ -19,9 +19,9 @@ module AdventOfCode
 
           next_nodes = yield(current_node)
           next_nodes.map! do |node|
-            unless @visited.keys.include?(node.join(','))
-              @visited[node.join(',')] = current_node
-              @queue << node.join(',')
+            unless @visited.keys.include?(node)
+              @visited[node] = current_node
+              @queue << node
             end
           end
         end
