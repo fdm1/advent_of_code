@@ -8,7 +8,7 @@ year = ARGV[0].to_i
 day = ARGV[1].to_i
 part = ARGV[2].to_i
 
-runner = AdventOfCode::Runner.new(year, day)
+runner = AdventOfCode::Runner.new(year:, day:)
 
 case part
 when 1

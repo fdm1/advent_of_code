@@ -4,8 +4,8 @@ module Year2015
   class Day07 < AdventOfCode::PuzzleBase
     attr_accessor :wires
 
-    def initialize(input)
-      super(input)
+    def initialize(**args)
+      super(**args)
       @wires = {}
       @input_rows = @input.split("\n")
       @processed_rows = []

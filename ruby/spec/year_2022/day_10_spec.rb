@@ -5,7 +5,7 @@ require 'spec_helper'
 RSpec.describe Year2022::Day10 do
   describe 'part1' do
     it 'solves part1' do
-      expect(puzzle_test_runner(2022, 10).part1).to eq(13_140)
+      expect(puzzle_test_runner(year: 2022, day: 10).part1).to eq(13_140)
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Year2022::Day10 do
     end
 
     it 'solves part2' do
-      expect(puzzle_test_runner(2022, 10).part2).to eq(expected_output.chomp)
+      expect(puzzle_test_runner(year: 2022, day: 10).part2).to eq(expected_output.chomp)
     end
   end
 end

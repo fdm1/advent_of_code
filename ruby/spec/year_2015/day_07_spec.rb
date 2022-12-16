@@ -18,7 +18,7 @@ RSpec.describe Year2015::Day07 do
     end
 
     it 'solves part1' do
-      expect(puzzle_test_runner(2015, 7).part1).to eq(expected_output)
+      expect(puzzle_test_runner(year: 2015, day: 7).part1).to eq(expected_output)
     end
   end
 end

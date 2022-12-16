@@ -4,11 +4,13 @@ module AdventOfCode
   class Runner
     attr_reader :year, :day, :input_path, :suffix
 
-    def initialize(year, day, input_path = nil, suffix = nil)
+    def initialize(year:, day:, input_path: nil, suffix: nil, debug: false, override_args: nil) # rubocop:disable Metrics/ParameterLists
       @year = year
       @day = day
       @input_path = input_path
       @suffix = suffix
+      @debug = debug
+      @override_args = override_args
     end
 
     def part1
@@ -49,7 +51,7 @@ module AdventOfCode
     end
 
     def puzzle_instance
-      @puzzle_instance ||= puzzle_klass.new(input_data)
+      @puzzle_instance ||= puzzle_klass.new(input: input_data, debug: @debug, override_args: @override_args)
     end
   end
 end

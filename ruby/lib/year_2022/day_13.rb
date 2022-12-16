@@ -46,8 +46,8 @@ module Year2022
       end
     end
 
-    def initialize(*args)
-      super(*args)
+    def initialize(**args)
+      super(**args)
       parse_input
     end
 

@@ -16,6 +16,12 @@ RSpec.configure do |config|
   end
 end
 
-def puzzle_test_runner(year, day, suffix = nil)
-  AdventOfCode::Runner.new(year, day, '../test_input', suffix)
+def puzzle_test_runner(year:, day:, suffix: nil, override_args: nil)
+  AdventOfCode::Runner.new(
+    year:,
+    day:,
+    input_path: '../test_input',
+    suffix:,
+    override_args:
+  )
 end

@@ -2,8 +2,8 @@
 
 module Year2022
   class Day09 < AdventOfCode::PuzzleBase
-    def initialize(input)
-      super(input)
+    def initialize(**args)
+      super(**args)
       @tails = []
       @head = [0, 0]
       @tail_positions = Set.new

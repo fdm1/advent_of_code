@@ -2,8 +2,8 @@
 
 module Year2022
   class Day11 < AdventOfCode::PuzzleBase
-    def initialize(input)
-      super(input)
+    def initialize(**args)
+      super(**args)
       @monkeys = {}
       parse_monkeys
     end

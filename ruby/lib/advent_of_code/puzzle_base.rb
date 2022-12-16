@@ -2,8 +2,10 @@
 
 module AdventOfCode
   class PuzzleBase
-    def initialize(input)
+    def initialize(input:, debug: false, override_args: nil)
       @input = input
+      @debug = debug || ENV.fetch('DEBUG', nil)
+      @override_args = override_args || {}
     end
 
     def part1

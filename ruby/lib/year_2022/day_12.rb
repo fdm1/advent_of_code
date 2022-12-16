@@ -2,8 +2,8 @@
 
 module Year2022
   class Day12 < AdventOfCode::PuzzleBase
-    def initialize(*args)
-      super(*args)
+    def initialize(**args)
+      super(**args)
       parse_grid
     end
 

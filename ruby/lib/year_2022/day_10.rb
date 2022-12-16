@@ -2,8 +2,8 @@
 
 module Year2022
   class Day10 < AdventOfCode::PuzzleBase
-    def initialize(input)
-      super(input)
+    def initialize(**args)
+      super(**args)
       @cycle = 0
       @signal_strength = 1
       @sprite_chars = ''
