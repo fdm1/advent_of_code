@@ -2,13 +2,6 @@
 
 module Year2022
   class Day09 < AdventOfCode::PuzzleBase
-    def initialize(**args)
-      super(**args)
-      @tails = []
-      @head = [0, 0]
-      @tail_positions = Set.new
-    end
-
     def part1
       @tails = [[0, 0]]
       process_input
@@ -20,6 +13,12 @@ module Year2022
     end
 
     private
+
+    def setup
+      @tails = []
+      @head = [0, 0]
+      @tail_positions = Set.new
+    end
 
     def process_input
       @input.split("\n").each do |row|

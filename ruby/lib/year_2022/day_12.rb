@@ -2,11 +2,6 @@
 
 module Year2022
   class Day12 < AdventOfCode::PuzzleBase
-    def initialize(**args)
-      super(**args)
-      parse_grid
-    end
-
     def part1
       bfs = AdventOfCode::Algorithms::BFS.new(endpoint: @end.join(','), starting_points: [@start.join(',')])
       bfs.run_search! { |node| available_nodes(node) }
@@ -30,7 +25,7 @@ module Year2022
       nodes.filter { |grid_node| @grid[grid_node[0]][grid_node[1]] >= (height - 1) }
     end
 
-    def parse_grid
+    def setup
       @low_points = []
       @grid = @input.split("\n").each_with_index.map do |row_chars, x|
         chars = row_chars.chars

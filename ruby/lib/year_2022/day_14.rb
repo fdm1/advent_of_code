@@ -2,11 +2,6 @@
 
 module Year2022
   class Day14 < AdventOfCode::PuzzleBase
-    def initialize(**args)
-      super(**args)
-      parse_grid
-    end
-
     def part1
       add_sand until @done
       # draw
@@ -111,7 +106,7 @@ module Year2022
       end
     end
 
-    def parse_grid
+    def setup
       @grid = Set.new
       @sand = Set.new
       @input.split("\n").map do |line|

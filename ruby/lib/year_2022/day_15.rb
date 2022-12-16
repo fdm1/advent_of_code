@@ -2,13 +2,6 @@
 
 module Year2022
   class Day15 < AdventOfCode::PuzzleBase
-    def initialize(**args)
-      super(**args)
-      parse_input
-      @part1_yval = @override_args[:yval] || 2_000_000
-      @part2_max_val = @override_args[:max_val] || 4_000_000
-    end
-
     def part1
       @min_y = @part1_yval
       @max_y = @part1_yval
@@ -39,6 +32,12 @@ module Year2022
     end
 
     private
+
+    def setup
+      parse_input
+      @part1_yval = @override_args[:yval] || 2_000_000
+      @part2_max_val = @override_args[:max_val] || 4_000_000
+    end
 
     def draw
       special_points = @sensor_positions.to_h { |v| [v, 'S'] }

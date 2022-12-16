@@ -3,23 +3,16 @@
 module Year2022
   class Day07 < AdventOfCode::PuzzleBase
     def part1
-      setup_directory_files
       directory_sizes.filter { |_k, v| v <= 100_000 }.values.sum
     end
 
     def part2
-      setup_directory_files
       total_disk = 70_000_000
       needed_space = 30_000_000 - (total_disk - directory_sizes['root'])
       directory_sizes.filter { |_k, v| v >= needed_space }.values.min
     end
 
     private
-
-    def setup
-      @current_directory = 'root'
-      @directories = {}
-    end
 
     def log
       @log ||= @input.split("\n")
@@ -56,8 +49,10 @@ module Year2022
       @directories[@current_directory]["#{@current_directory}/#{log_line.split[1]}"] = first_string.to_i
     end
 
-    def setup_directory_files
-      setup
+    def setup
+      @current_directory = 'root'
+      @directories = {}
+
       log.each do |log_line|
         if log_line.start_with?('$ cd ')
           update_current_directory(log_line)

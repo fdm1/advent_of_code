@@ -6,6 +6,7 @@ module AdventOfCode
       @input = input
       @debug = debug || ENV.fetch('DEBUG', nil)
       @override_args = override_args || {}
+      setup
     end
 
     def part1
@@ -15,5 +16,7 @@ module AdventOfCode
     def part2
       'Part 2 not implemented yet'
     end
+
+    def setup; end
   end
 end

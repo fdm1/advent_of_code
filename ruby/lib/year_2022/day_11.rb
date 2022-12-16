@@ -2,12 +2,6 @@
 
 module Year2022
   class Day11 < AdventOfCode::PuzzleBase
-    def initialize(**args)
-      super(**args)
-      @monkeys = {}
-      parse_monkeys
-    end
-
     def part1
       20.times do |_i|
         @monkeys.each do |_monkey_n, monkey|
@@ -63,7 +57,8 @@ module Year2022
       item
     end
 
-    def parse_monkeys
+    def setup
+      @monkeys = {}
       @input.split("\n\n").each do |input_block|
         parse_monkey(input_block)
       end

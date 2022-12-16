@@ -4,13 +4,6 @@ module Year2015
   class Day07 < AdventOfCode::PuzzleBase
     attr_accessor :wires
 
-    def initialize(**args)
-      super(**args)
-      @wires = {}
-      @input_rows = @input.split("\n")
-      @processed_rows = []
-    end
-
     def part1(input = @input_rows)
       process_input(input) while @processed_rows.count != input.count
 
@@ -31,6 +24,12 @@ module Year2015
     end
 
     private
+
+    def setup
+      @wires = {}
+      @input_rows = @input.split("\n")
+      @processed_rows = []
+    end
 
     def process_input(input)
       input.each do |row|

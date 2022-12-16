@@ -2,14 +2,6 @@
 
 module Year2022
   class Day10 < AdventOfCode::PuzzleBase
-    def initialize(**args)
-      super(**args)
-      @cycle = 0
-      @signal_strength = 1
-      @sprite_chars = ''
-      @signal_strengths = {}
-    end
-
     def part1
       @input.split("\n").map { |row| process(row) { store_signal_strength } }
       @signal_strengths.values.sum
@@ -23,6 +15,13 @@ module Year2022
     end
 
     private
+
+    def setup
+      @cycle = 0
+      @signal_strength = 1
+      @sprite_chars = ''
+      @signal_strengths = {}
+    end
 
     def process(row)
       yield
