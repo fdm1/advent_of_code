@@ -23,7 +23,7 @@ module Year2022
       nodes << [x + 1, y] if x < @grid.size - 1
       nodes << [x, y - 1] if y.positive?
       nodes << [x, y + 1] if y < @grid.first.size - 1
-      nodes.filter { |grid_node| @grid[grid_node[0]][grid_node[1]] >= (height - 1) }.map {|n| n.join(",")}
+      nodes.filter { |grid_node| @grid[grid_node[0]][grid_node[1]] >= (height - 1) }.map { |n| n.join(',') }
     end
 
     def setup
