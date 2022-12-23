@@ -3,12 +3,12 @@
 module Year2022
   class Day12 < AdventOfCode::PuzzleBase
     def part1
-      bfs = AdventOfCode::Algorithms::BFS.new(endpoint: @end.join(','), starting_points: [@start.join(',')])
+      bfs = AdventOfCode::Algorithms::BFS.new(end_node: @end.join(','), starting_nodes: [@start.join(',')])
       bfs.run_search! { |node| available_nodes(node) }
     end
 
     def part2
-      bfs = AdventOfCode::Algorithms::BFS.new(endpoint: @end.join(','), starting_points: @low_points)
+      bfs = AdventOfCode::Algorithms::BFS.new(end_node: @end.join(','), starting_nodes: @low_points)
       bfs.run_search! { |node| available_nodes(node) }
     end
 

@@ -124,7 +124,7 @@ module Year2022
         @valves.keys.map do |tunnel|
           next if tunnel == valve
 
-          distance = AdventOfCode::Algorithms::BFS.new(endpoint: valve, starting_points: [tunnel]).run_search! do |v|
+          distance = AdventOfCode::Algorithms::BFS.new(end_node: valve, starting_nodes: [tunnel]).run_search! do |v|
             @valves[v][:tunnels].dup
           end
           valve_tunnel_distances[tunnel] = distance

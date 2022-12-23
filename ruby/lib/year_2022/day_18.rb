@@ -11,7 +11,7 @@ module Year2022
       spots_to_check = @cubes.collect { |c| open_adjacent_points(*c[:coords]) }.flatten(1).uniq
       spots_to_check.reject! { |c| is_outer_cube?(*c) }
 
-      open_points = Set.new
+      open_points = Set.new(points_outside)
       closed_points = Set.new
       @cubes.each_with_index do |cube, i|
         puts "Checking #{cube[:coords]} (#{i}/#{@cubes.length})" if @debug
@@ -20,23 +20,18 @@ module Year2022
 
         adjacent_coords.map do |p|
           point_cubes = Set.new
-          can_get_out = AdventOfCode::Algorithms::BFS.new(
-            endpoint: p,
-            starting_points: points_outside
-          ).run_search! do |point|
-            point_cubes << point
-            if closed_points.include?(point)
-              []
-            else
-              next_points = open_adjacent_points(*point)
-              open_points.include?(point) ? points_outside : next_points
-            end
-          end
-          if can_get_out
+          bfs = AdventOfCode::Algorithms::BFS.new(
+            end_node: p,
+            starting_nodes: points_outside,
+            bad_nodes: closed_points
+          )
+          # binding.pry if i == 5
+          bfs.run_search! { |point| open_adjacent_points(*point) }
+          if bfs.distance
+            open_points.merge(bfs.nodes_visited)
             cube[:outer_faces] += 1
-            open_points.merge(point_cubes)
           else
-            closed_points.merge(point_cubes)
+            closed_points.merge(bfs.nodes_visited)
           end
         end
       end
