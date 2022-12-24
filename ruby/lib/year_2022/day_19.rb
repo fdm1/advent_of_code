@@ -4,9 +4,11 @@ module Year2022
   class Day19 < AdventOfCode::PuzzleBase
     def part1
       @recipes.keys.collect do |r|
-        game = Day19Game.new(recipe: @recipes[r])
-        buy_and_tick(game) until game.minutes.zero?
-        game.value
+        2.times.collect do |i|
+          game = Day19Game.new(recipe: @recipes[r], ore_first: i.zero?)
+          buy_and_tick(game) until game.minutes.zero?
+          game.value
+        end.max
       end.sum
     end
 
@@ -88,7 +90,8 @@ module Year2022
 
     MINUTES = 24
 
-    def initialize(recipe:, minutes: MINUTES, building: nil, robots: nil, resources: nil)
+    def initialize(recipe:, minutes: MINUTES, building: nil, robots: nil, resources: nil, ore_first: true)
+      @ore_first = ore_first
       @recipe = recipe
       @building = building || {
         ore: 0,
@@ -189,8 +192,13 @@ module Year2022
 
       return :geode if can_buy_robot?(:geode)
       return :obsidian if should_buy_obsidian?
-      return :ore if should_buy_ore?
-      return :clay if should_buy_clay?
+      if @ore_first
+        return :ore if should_buy_ore?
+        return :clay if should_buy_clay?
+      else
+        return :clay if should_buy_clay?
+        return :ore if should_buy_ore?
+      end
     end
 
     def can_buy_robot?(type)
