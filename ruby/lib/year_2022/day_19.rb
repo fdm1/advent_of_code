@@ -3,82 +3,41 @@
 module Year2022
   class Day19 < AdventOfCode::PuzzleBase
     def part1
-      find_solution
-      puts @best_games
-      @best_games.max_by { |k, v| v[:value] }.last[:value]
+      @recipes.keys.collect do |r|
+        game = Day19Game.new(recipe: @recipes[r])
+        buy_and_tick(game) until game.minutes.zero?
+        game.value
+      end.sum
     end
 
     private
 
-    def find_solution
-      @all_games = []
-      game_queue = @recipes.keys.collect { |r| Day19Game.new(recipe: @recipes[r])}
-      iterations = 0
-      while game_queue.any?
-        iterations += 1
-        game = game_queue.shift
-        next if game.nil?
-        recipe_id = game.recipe_id
-
-        # puts "#{game}" if iterations % 1000 == 0
-        # puts "game #{recipe_id} - #{game.minutes} - #{game.resources[:geode]}" if game.resources[:geode] > 0
-        game.tick
-        binding.pry if iterations == 1
-        if game.minutes > 2
-          # obsidian_game = buy_obsidian(copy_game(game))
-
-          game_queue << buy_most_advanced_strategy(copy_game(game))
-          game_queue << buy_clay(copy_game(game))
-          game_queue << buy_obsidian(copy_game(game))
-          game_queue << buy_advanced(copy_game(game))
-          # game_queue << obsidian_game if obsidian_game
-          #
-          # game_queue << advanced_game if advanced_game
-        end
-        # binding.pry if game_queue.any? {|g| g.is_a?(Integer)}
-        if game.minutes > 0
-          game_queue << game  # do nothing
-        else
-          @all_games << game
-          @best_games[recipe_id] = {value: game.value, geode: game.resources[:geode]} if game.value > @best_games[recipe_id][:value]
-        end
+    def buy_and_tick(game)
+      # puts "BUYING #{game.recommended_robot} (
+      buy_string = game.recommended_robot ? "buy #{game.recommended_robot}" : 'do nothing'
+      if @debug && game.recipe_id == @debug_id
+        puts
+        puts "Minute #{game.minutes_elapsed} - #{buy_string}"
       end
+      game.buy_robot_type(game.recommended_robot)
+      game.tick
+      puts game if @debug && game.recipe_id == @debug_id
     end
 
-    def copy_game(game)
-      Day19Game.new(recipe: game.recipe, resources: game.resources.dup, robots: game.robots.dup, minutes: game.minutes)
-    end
+    def buy_recommended(game)
+      next_type = game.recommended_robot
+      return unless next_type
 
-    def buy_clay(game)
-      return unless game.can_buy_robot?(:clay)
-      game.buy_robot_type(:clay)
-      game
-    end
-
-    def buy_obsidian(game)
-      return unless game.can_buy_robot?(:obsidian)
-      game.buy_robot_type(:obsidian)
-      game
-    end
-
-    def buy_advanced(game)
-      return unless game.can_buy_robot?(:geode) || game.can_buy_robot?(:obsidian)
-      game.buy_most_advanced_robot
-      game
-    end
-
-    def buy_most_advanced_strategy(game)
-      while game.minutes > 0
-        game.buy_most_advanced_robot
-        game.tick
-      end
+      # puts "buying recommended #{next_type}"
+      game.buy_robot_type(next_type)
       game
     end
 
     def setup
       @recipes = {}
       @input.split("\n").map { |r| parse_recipe(r) }
-      @best_games = @recipes.keys.collect { |r| [r, {value: 0}] }.to_h
+      @best_games = @recipes.keys.to_h { |r| [r, { value: 0 }] }
+      @debug_id = ENV.fetch('ID', -1).to_i
     end
 
     def parse_recipe(recipe_rows)
@@ -97,29 +56,27 @@ module Year2022
 
       @recipes[recipe_n] = {
         id: recipe_n,
-        robots: {
-          ore: {
-            costs: {
-              ore: ore_robot_ore_cost
-            }
-          },
-          clay: {
-            costs: {
-              ore: clay_robot_ore_cost
-            }
+        ore: {
+          costs: {
+            ore: ore_robot_ore_cost
+          }
+        },
+        clay: {
+          costs: {
+            ore: clay_robot_ore_cost
+          }
 
-          },
-          obsidian: {
-            costs: {
-              ore: obsidian_robot_ore_cost,
-              clay: obsidian_robot_clay_cost
-            }
-          },
-          geode: {
-            costs: {
-              ore: geode_robot_ore_cost,
-              obsidian: geode_robot_obsidian_cost
-            }
+        },
+        obsidian: {
+          costs: {
+            ore: obsidian_robot_ore_cost,
+            clay: obsidian_robot_clay_cost
+          }
+        },
+        geode: {
+          costs: {
+            ore: geode_robot_ore_cost,
+            obsidian: geode_robot_obsidian_cost
           }
         }
       }
@@ -127,35 +84,38 @@ module Year2022
   end
 
   class Day19Game
-    attr_accessor :recipe, :building, :robots, :resources, :minutes, :value, :recipe_id
+    attr_accessor :recipe, :building, :robots, :resources, :minutes
 
     MINUTES = 24
 
     def initialize(recipe:, minutes: MINUTES, building: nil, robots: nil, resources: nil)
       @recipe = recipe
       @building = building || {
-          ore: 0,
-          clay: 0,
-          obsidian: 0,
-          geode: 0
-        }
-      @robots = robots ||{
-          ore: 1,
-          clay: 0,
-          obsidian: 0,
-          geode: 0
-        }
-      @resources = resources ||{
-          ore: 0,
-          clay: 0,
-          obsidian: 0,
-          geode: 0
-        }
+        ore: 0,
+        clay: 0,
+        obsidian: 0,
+        geode: 0
+      }
+      @robots = robots || {
+        ore: 1,
+        clay: 0,
+        obsidian: 0,
+        geode: 0
+      }
+      @resources = resources || {
+        ore: 0,
+        clay: 0,
+        obsidian: 0,
+        geode: 0
+      }
       @minutes = minutes
     end
 
     def to_s
-      "recipe: #{recipe_id} - minutes: #{minutes} - resources: #{resources} - value: #{value}"
+      [
+        "- robots: #{robots.dup.keep_if { |_k, v| v.positive? }}",
+        "- resources: #{resources.dup.keep_if { |_k, v| v.positive? }}"
+      ].compact.join("\n")
     end
 
     def recipe_id
@@ -163,69 +123,95 @@ module Year2022
     end
 
     def value
-      resources[:geode] * recipe[:id] if minutes == 0
+      resources[:geode] * recipe[:id] if minutes.zero?
     end
 
-    def can_buy_any_robot?
-      can_buy_robot?(:geode) ||
-        can_buy_robot?(:obsidian) ||
-        can_buy_robot?(:clay) ||
-        can_buy_robot?(:ore)
+    def minutes_elapsed
+      MINUTES - minutes + 1
+    end
+
+    # Blueprint 1 (9):
+    #   Each ore robot costs 4 ore.
+    #   Each clay robot costs 2 ore.
+    #   Each obsidian robot costs 3 ore and 14 clay.
+    #   Each geode robot costs 2 ore and 7 obsidian.
+    #
+    # Blueprint 2 (24 - 12 geodes):
+    #   Each ore robot costs 2 ore.
+    #   Each clay robot costs 3 ore.
+    #   Each obsidian robot costs 3 ore and 8 clay.
+    #   Each geode robot costs 3 ore and 12 obsidian.
+
+    def cannot_buy_b_if_buy_a?(type_a, type_b, rounds = 1)
+      game_that_buys_a = copy_game
+      game_that_does_not_buy_a = copy_game
+      game_that_buys_a.buy_robot_type(type_a)
+      rounds.times do
+        game_that_buys_a.tick
+        game_that_does_not_buy_a.tick
+        return true if !game_that_buys_a.can_buy_robot?(type_b) && game_that_does_not_buy_a.can_buy_robot?(type_b)
+      end
+      !game_that_buys_a.can_buy_robot?(type_b) && game_that_does_not_buy_a.can_buy_robot?(type_b)
+    end
+
+    def should_buy_obsidian?
+      return false unless can_buy_robot?(:obsidian)
+
+      !cannot_buy_b_if_buy_a?(:obsidian, :geode, 5)
+    end
+
+    def should_buy_clay?
+      return false unless can_buy_robot?(:clay)
+
+      # return false if (robots[:clay] + resources[:clay] >= recipe[:obsidian][:costs][:clay]
+      # return false if recipe[:obsidian][:costs][:clay] <= robots[:clay] / 2
+      !cannot_buy_b_if_buy_a?(:clay, :obsidian, 5)
+    end
+
+    def should_buy_ore?
+      # return false if recipe_id == 2 && minutes_elapsed == 3
+      return false unless can_buy_robot?(:ore)
+      return false if robots[:ore] >= [
+        recipe[:clay][:costs][:ore],
+        recipe[:obsidian][:costs][:ore],
+        recipe[:geode][:costs][:ore]
+      ].max
+
+      # return false if cannot_buy_b_if_buy_a?(:ore, :geode, 5)
+      #
+      # return false if  cannot_buy_b_if_buy_a?(:ore, :obsidian, 5)
+      #   cannot_buy_b_if_buy_a?(:ore, :clay, 3)
+      true
+    end
+
+    def recommended_robot
+      # binding.pry if recipe_id == 2 && minutes_elapsed == 5
+
+      return :geode if can_buy_robot?(:geode)
+      return :obsidian if should_buy_obsidian?
+      return :ore if should_buy_ore?
+      return :clay if should_buy_clay?
     end
 
     def can_buy_robot?(type)
-      recipe[:robots][type][:costs].each do |cost_type, cost_value|
-        return false if resources[cost_type] < cost_value
+      recipe[type][:costs].all? do |cost_type, cost_value|
+        cost_value <= resources[cost_type]
       end
-    end
-
-    def most_advanced_robot_can_afford
-      if can_buy_robot?(:geode)
-        :geode
-      elsif can_buy_robot?(:obsidian)
-        :obsidian
-      elsif can_buy_robot?(:clay)
-        :clay
-      elsif can_buy_robot?(:ore)
-        :ore
-      end
-    end
-
-    def buy_next_most_advanced_robot
-      if can_buy_robot?(:geode) && can_buy_robot?(:obsidian)
-        buy_robot_type(:obsidian)
-      elsif can_buy_robot?(:obsidian) && can_buy_robot?(:clay)
-        buy_robot_type(:clay)
-      elsif can_buy_robot?(:clay) && can_buy_robot?(:ore)
-        buy_robot_type(:ore)
-      end
-    end
-
-    def buy_least_advanced_robot
-      buy_robot_type(:ore) ||
-        buy_robot_type(:clay) ||
-        buy_robot_type(:obsidian) ||
-        buy_robot_type(:geode)
-    end
-
-    def buy_most_advanced_robot
-      buy_robot_type(:geode) ||
-        buy_robot_type(:obsidian) ||
-        buy_robot_type(:clay) ||
-        buy_robot_type(:ore)
     end
 
     def buy_robot_type(type)
-      return unless can_buy_robot?(type) && minutes > 0
-      recipe[:robots][type][:costs].each do |cost_type, cost_value|
+      return unless type
+      return unless can_buy_robot?(type)
+
+      recipe[type][:costs].each do |cost_type, cost_value|
         resources[cost_type] -= cost_value
       end
       building[type] += 1
     end
 
     def finish_building
-      building.keys.each do |type|
-        if building[type] > 0
+      building.each_key do |type|
+        if building[type].positive?
           robots[type] += 1
           building[type] -= 1
         end
@@ -238,12 +224,16 @@ module Year2022
       end
     end
 
+    def copy_game
+      Day19Game.new(recipe:, resources: resources.dup, robots: robots.dup, minutes: minutes.dup)
+    end
+
     def tick
-      if minutes > 0
-        collect_resources
-        finish_building
-        self.minutes -= 1
-      end
+      return unless minutes.positive?
+
+      collect_resources
+      finish_building
+      self.minutes -= 1
     end
   end
 end
