@@ -4,7 +4,7 @@ module AdventOfCode
   class Runner
     attr_reader :year, :day, :input_path, :suffix
 
-    def initialize(year:, day:, input_path: nil, suffix: nil, debug: false, override_args: nil) # rubocop:disable Metrics/ParameterLists
+    def initialize(year:, day:, input_path: nil, suffix: nil, debug: false, override_args: nil)
       @year = year
       @day = day
       @input_path = input_path

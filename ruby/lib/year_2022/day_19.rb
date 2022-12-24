@@ -160,31 +160,26 @@ module Year2022
     def should_buy_obsidian?
       return false unless can_buy_robot?(:obsidian)
 
-      !cannot_buy_b_if_buy_a?(:obsidian, :geode, 5)
+      !cannot_buy_b_if_buy_a?(:obsidian, :geode, 1)
     end
 
     def should_buy_clay?
       return false unless can_buy_robot?(:clay)
 
-      # return false if (robots[:clay] + resources[:clay] >= recipe[:obsidian][:costs][:clay]
-      # return false if recipe[:obsidian][:costs][:clay] <= robots[:clay] / 2
-      !cannot_buy_b_if_buy_a?(:clay, :obsidian, 5)
+      # return false if robots[:clay] >= recipe[:obsidian][:costs][:clay]
+
+      !cannot_buy_b_if_buy_a?(:clay, :obsidian, 2) &&
+        !cannot_buy_b_if_buy_a?(:clay, :geode, 1)
     end
 
     def should_buy_ore?
-      # return false if recipe_id == 2 && minutes_elapsed == 3
       return false unless can_buy_robot?(:ore)
-      return false if robots[:ore] >= [
+
+      robots[:ore] < [
         recipe[:clay][:costs][:ore],
         recipe[:obsidian][:costs][:ore],
         recipe[:geode][:costs][:ore]
       ].max
-
-      # return false if cannot_buy_b_if_buy_a?(:ore, :geode, 5)
-      #
-      # return false if  cannot_buy_b_if_buy_a?(:ore, :obsidian, 5)
-      #   cannot_buy_b_if_buy_a?(:ore, :clay, 3)
-      true
     end
 
     def recommended_robot
@@ -192,6 +187,7 @@ module Year2022
 
       return :geode if can_buy_robot?(:geode)
       return :obsidian if should_buy_obsidian?
+
       if @ore_first
         return :ore if should_buy_ore?
         return :clay if should_buy_clay?
