@@ -135,18 +135,6 @@ module Year2022
       MINUTES - minutes + 1
     end
 
-    # Blueprint 1 (9):
-    #   Each ore robot costs 4 ore.
-    #   Each clay robot costs 2 ore.
-    #   Each obsidian robot costs 3 ore and 14 clay.
-    #   Each geode robot costs 2 ore and 7 obsidian.
-    #
-    # Blueprint 2 (24 - 12 geodes):
-    #   Each ore robot costs 2 ore.
-    #   Each clay robot costs 3 ore.
-    #   Each obsidian robot costs 3 ore and 8 clay.
-    #   Each geode robot costs 3 ore and 12 obsidian.
-
     def cannot_buy_b_if_buy_a?(type_a, type_b, rounds = 1)
       game_that_buys_a = copy_game
       game_that_does_not_buy_a = copy_game
@@ -168,7 +156,7 @@ module Year2022
     def should_buy_clay?
       return false unless can_buy_robot?(:clay)
 
-      # return false if robots[:clay] >= recipe[:obsidian][:costs][:clay]
+      return false if robots[:clay] >= recipe[:obsidian][:costs][:clay]
 
       !cannot_buy_b_if_buy_a?(:clay, :obsidian, 5) &&
         !cannot_buy_b_if_buy_a?(:clay, :geode, 5)
@@ -176,6 +164,9 @@ module Year2022
 
     def should_buy_ore?
       return false unless can_buy_robot?(:ore)
+
+      return false unless !cannot_buy_b_if_buy_a?(:ore, :obsidian, 5) &&
+                          !cannot_buy_b_if_buy_a?(:ore, :geode, 5)
 
       robots[:ore] < [
         recipe[:clay][:costs][:ore],
