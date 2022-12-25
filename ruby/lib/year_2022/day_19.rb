@@ -4,9 +4,10 @@ module Year2022
   class Day19 < AdventOfCode::PuzzleBase
     def part1
       @recipes.keys.collect do |r|
-        2.times.collect do |i|
-          game = Day19Game.new(recipe: @recipes[r], ore_first: i.zero?)
+        %i[ore clay obsidian geode].permutation.collect do |p|
+          game = Day19Game.new(recipe: @recipes[r], purchase_order: p)
           buy_and_tick(game) until game.minutes.zero?
+          # puts "Game: #{game.recipe_id} - #{p} - #{game.value}"
           game.value
         end.max
       end.sum
@@ -16,7 +17,8 @@ module Year2022
 
     def buy_and_tick(game)
       # puts "BUYING #{game.recommended_robot} (
-      buy_string = game.recommended_robot ? "buy #{game.recommended_robot}" : 'do nothing'
+      recommended = game.recommended_robot
+      buy_string = recommended ? "buy #{recommended}" : 'do nothing'
       if @debug && game.recipe_id == @debug_id
         puts
         puts "Minute #{game.minutes_elapsed} - #{buy_string}"
@@ -90,8 +92,7 @@ module Year2022
 
     MINUTES = 24
 
-    def initialize(recipe:, minutes: MINUTES, building: nil, robots: nil, resources: nil, ore_first: true)
-      @ore_first = ore_first
+    def initialize(recipe:, minutes: MINUTES, building: nil, robots: nil, resources: nil, purchase_order: [])
       @recipe = recipe
       @building = building || {
         ore: 0,
@@ -112,6 +113,7 @@ module Year2022
         geode: 0
       }
       @minutes = minutes
+      @purchase_order = purchase_order
     end
 
     def to_s
@@ -160,7 +162,7 @@ module Year2022
     def should_buy_obsidian?
       return false unless can_buy_robot?(:obsidian)
 
-      !cannot_buy_b_if_buy_a?(:obsidian, :geode, 1)
+      !cannot_buy_b_if_buy_a?(:obsidian, :geode, 5)
     end
 
     def should_buy_clay?
@@ -168,8 +170,8 @@ module Year2022
 
       # return false if robots[:clay] >= recipe[:obsidian][:costs][:clay]
 
-      !cannot_buy_b_if_buy_a?(:clay, :obsidian, 2) &&
-        !cannot_buy_b_if_buy_a?(:clay, :geode, 1)
+      !cannot_buy_b_if_buy_a?(:clay, :obsidian, 5) &&
+        !cannot_buy_b_if_buy_a?(:clay, :geode, 5)
     end
 
     def should_buy_ore?
@@ -182,19 +184,24 @@ module Year2022
       ].max
     end
 
-    def recommended_robot
-      # binding.pry if recipe_id == 2 && minutes_elapsed == 5
-
-      return :geode if can_buy_robot?(:geode)
-      return :obsidian if should_buy_obsidian?
-
-      if @ore_first
-        return :ore if should_buy_ore?
-        return :clay if should_buy_clay?
-      else
-        return :clay if should_buy_clay?
-        return :ore if should_buy_ore?
+    def should_buy_robot?(type)
+      case type
+      when :ore
+        should_buy_ore?
+      when :clay
+        should_buy_clay?
+      when :obsidian
+        should_buy_obsidian?
+      when :geode
+        can_buy_robot?(:geode)
       end
+    end
+
+    def recommended_robot
+      @purchase_order.each do |type|
+        return type if should_buy_robot?(type)
+      end
+      nil
     end
 
     def can_buy_robot?(type)
