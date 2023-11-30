@@ -3,17 +3,52 @@
 module Year2022
   class Day19 < AdventOfCode::PuzzleBase
     def part1
-      @recipes.keys.collect do |r|
-        %i[ore clay obsidian geode].permutation.collect do |p|
-          game = Day19Game.new(recipe: @recipes[r], purchase_order: p)
-          buy_and_tick(game) until game.minutes.zero?
-          # puts "Game: #{game.recipe_id} - #{p} - #{game.value}"
-          game.value
-        end.max
-      end.sum
+      find_solution
+      @best_games.values.collect { |g| g[:value] }.sum
     end
 
     private
+
+    def find_solution
+      @all_games = []
+      game_queue = []
+
+      @recipes.keys.collect do |r|
+        %i[ore clay obsidian geode].permutation.collect do |p|
+          game_queue << Day19Game.new(recipe: @recipes[r], purchase_order: p)
+        end
+      end
+
+      # game = Day19Game.new(recipe)
+      iterations = 0
+      while game_queue.any?
+        iterations += 1
+        game = game_queue.shift
+        next if game.nil?
+
+        recipe_id = game.recipe_id
+
+        if game.minutes.positive?
+          recommended = game.recommended_robot
+
+          if recommended && game.resources[:obsidian].zero?
+            game_copy = game.copy_game
+            game_copy.tick
+            game_queue << game_copy
+          end
+          game.buy_robot_type(recommended)
+          game.tick
+          game_queue << game # do nothing
+        else
+          @all_games << game
+          if game.value > @best_games[recipe_id][:value]
+            @best_games[recipe_id] =
+              { value: game.value, geode: game.resources[:geode] }
+          end
+        end
+      end
+      puts "iterations: #{iterations}"
+    end
 
     def buy_and_tick(game)
       # puts "BUYING #{game.recommended_robot} (
@@ -147,26 +182,27 @@ module Year2022
       !game_that_buys_a.can_buy_robot?(type_b) && game_that_does_not_buy_a.can_buy_robot?(type_b)
     end
 
+    def should_buy_geode?
+      can_buy_robot?(:geode)
+    end
+
     def should_buy_obsidian?
       return false unless can_buy_robot?(:obsidian)
+      return true
 
-      !cannot_buy_b_if_buy_a?(:obsidian, :geode, 5)
+      !cannot_buy_b_if_buy_a?(:obsidian, :geode)
     end
 
     def should_buy_clay?
       return false unless can_buy_robot?(:clay)
+      return true
 
-      return false if robots[:clay] >= recipe[:obsidian][:costs][:clay]
-
-      !cannot_buy_b_if_buy_a?(:clay, :obsidian, 5) &&
-        !cannot_buy_b_if_buy_a?(:clay, :geode, 5)
+      !cannot_buy_b_if_buy_a?(:clay, :obsidian, 5) && !cannot_buy_b_if_buy_a?(:clay, :geode)
     end
 
     def should_buy_ore?
       return false unless can_buy_robot?(:ore)
-
-      return false unless !cannot_buy_b_if_buy_a?(:ore, :obsidian, 5) &&
-                          !cannot_buy_b_if_buy_a?(:ore, :geode, 5)
+      return false unless !cannot_buy_b_if_buy_a?(:ore, :obsidian) && !cannot_buy_b_if_buy_a?(:ore, :geode)
 
       robots[:ore] < [
         recipe[:clay][:costs][:ore],
@@ -184,7 +220,7 @@ module Year2022
       when :obsidian
         should_buy_obsidian?
       when :geode
-        can_buy_robot?(:geode)
+        should_buy_geode?
       end
     end
 
@@ -227,7 +263,7 @@ module Year2022
     end
 
     def copy_game
-      Day19Game.new(recipe:, resources: resources.dup, robots: robots.dup, minutes: minutes.dup)
+      Day19Game.new(recipe:, resources: resources.dup, robots: robots.dup, minutes: minutes.dup, purchase_order: @purchase_order)
     end
 
     def tick
