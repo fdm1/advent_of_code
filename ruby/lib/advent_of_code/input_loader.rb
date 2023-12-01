@@ -37,7 +37,11 @@ module AdventOfCode
       FileUtils.mkdir_p(File.dirname(filename))
 
       puts "Downloading input for day #{@day} of #{@year}..." unless is_test?
-      return unless fetch&.code == 200
+      if fetch&.code != 200
+        puts "Failed to download input for day #{@day} of #{@year}!"
+        puts fetch
+        return
+      end
 
       data = fetch.body
 
