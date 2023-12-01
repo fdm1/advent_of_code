@@ -41,24 +41,21 @@ module Year2023
       char =~ /[[:digit:]]/
     end
 
-    def replace_number_strings(string_row)
-      new_string = []
-
-      char_row = string_row.chars
-      while char_row.length > 0
-        if char_is_numeric?(char_row.first)
-          new_string << char_row.shift
-        else
-          NUMBERS.each do |word, number|
-            if char_row.join.start_with?(word)
-              new_string << number
-              break
-            end
-          end
-          char_row.shift
-        end
+    def get_digit(string_row, reverse = false)
+      pattern = /(#{NUMBERS.keys.map {|k| reverse ? k.reverse : k}.join("|")}|[[:digit:]])/
+      if reverse
+        string_row = string_row.reverse
       end
-      new_string.join
+      match = string_row.match(pattern).match(0)
+      if char_is_numeric?(match)
+        return match
+      else
+        return NUMBERS[reverse ? match.reverse : match]
+      end
+    end
+
+    def replace_number_strings(string_row)
+      [get_digit(string_row), get_digit(string_row, true)].join
     end
   end
 end
