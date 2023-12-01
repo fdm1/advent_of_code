@@ -12,7 +12,7 @@ module Year2023
       'seven' => 7,
       'eight' => 8,
       'nine' => 9
-    }
+    }.transform_values(&:to_s).freeze
 
     def part1
       digit_rows = extract_numbers
@@ -24,6 +24,7 @@ module Year2023
     def part2
       converted_rows = @input.split("\n").map { |row| replace_number_strings(row) }
       digit_rows = extract_numbers(converted_rows.join("\n"))
+      digit_rows = digit_rows.filter { |row| row.length > 1 }
       digit_rows.collect do |row|
         row.first + row.last
       end.map(&:to_i).sum
@@ -42,23 +43,23 @@ module Year2023
 
     def replace_number_strings(string_row)
       new_string = []
+
       char_row = string_row.chars
       while char_row.length > 0
-        added = false
         if char_is_numeric?(char_row.first)
           new_string << char_row.shift
-          next
         else
+          added_word = false
           NUMBERS.each do |word, number|
-            if char_row.join.match?(/^#{word}/)
+            if char_row.join.start_with?(word)
               new_string << number
               char_row.shift(word.length)
-              added = true
-              next
+              added_word = true
+              break
             end
           end
+          char_row.shift unless added_word
         end
-        char_row.shift unless added
       end
       new_string.join
     end
