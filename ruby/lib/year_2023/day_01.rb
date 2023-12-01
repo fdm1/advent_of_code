@@ -49,16 +49,13 @@ module Year2023
         if char_is_numeric?(char_row.first)
           new_string << char_row.shift
         else
-          added_word = false
           NUMBERS.each do |word, number|
             if char_row.join.start_with?(word)
               new_string << number
-              char_row.shift(word.length)
-              added_word = true
               break
             end
           end
-          char_row.shift unless added_word
+          char_row.shift
         end
       end
       new_string.join
