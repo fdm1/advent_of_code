@@ -9,9 +9,9 @@ RSpec.describe Year2023::Day03 do
     end
   end
 
-  xdescribe 'part2' do
+  describe 'part2' do
     it 'solves part2' do
-      expect(puzzle_test_runner(year: 2023, day: 3).part2).to eq(2)
+      expect(puzzle_test_runner(year: 2023, day: 3).part2).to eq(467_835)
     end
   end
 end
