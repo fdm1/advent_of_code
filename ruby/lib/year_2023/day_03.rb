@@ -17,18 +17,20 @@ module Year2023
         row.collect do |number_index, number|
           matching_symbols = symbols_touching_number(row_index, number_index, '*')
           if matching_symbols.length.positive?
-            [number,
+            ["#{number}-#{row_index}-#{number_index}",
              { number_coords: [row_index, number_index], symbol_coords: matching_symbols }]
           end
         end
       end.flatten(1).compact.to_h
-      potential_gears = valid_numbers.values.collect { |n| n[:symbol_coords] }.flatten(1).uniq
-      potential_gears.collect do |gear|
+      potential_gears = valid_numbers.values.collect { |n| n[:symbol_coords] }.flatten(1).uniq.sort_by(&:first)
+      gears = potential_gears.collect do |gear|
         gear_numbers = valid_numbers.select { |_n, d| d[:symbol_coords].include?(gear) }.keys
         next if gear_numbers.length != 2
 
-        gear_numbers.map(&:to_i).inject(:*)
-      end.compact.sum
+        [gear, gear_numbers]
+      end.compact.to_h
+
+      gears.values.collect { |v| v.map { |n| n.split('-').first.to_i } }.map { |g| g.inject(:*) }.sum
     end
 
     def symbols_touching_number(row_index, number_index, specific_symbol = nil)
