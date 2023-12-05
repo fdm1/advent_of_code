@@ -12,18 +12,17 @@ module Year2023
 
     def parse_mapping(mapping_lines)
       mapping_name = mapping_lines.first.split(" ").first.gsub("-to-", "_to_").to_sym
-      @mappings[mapping_name] = {}
+      @mappings[mapping_name] = []
       mapping_lines[1..-1].map do |mapping_line|
         destination, source, range = mapping_line.split(" ").map(&:to_i)
-        range.times do |i|
-          @mappings[mapping_name][source + i] = destination + i
-        end
+        @mappings[mapping_name] << { source_range: Range.new(source, source + range), destination_start: destination }
       end
-      @mappings[mapping_name]
     end
 
     def find_next_value(seed, mapping)
-      mapping[seed] || seed
+      applicable_range = mapping.find { |mapping| mapping[:source_range].include?(seed) }
+      return seed unless applicable_range
+      applicable_range[:destination_start] + (seed - applicable_range[:source_range].first)
     end
 
     def find_seed_location(seed)
