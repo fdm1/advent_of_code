@@ -8,6 +8,14 @@ module Year2023
     end
 
     def part2
+      setup
+      @range_seeds = []
+      @seeds.each_with_index do |seed, index|
+        if index.even?
+          @range_seeds << Range.new(seed, seed + @seeds[index + 1]).to_a
+        end
+      end
+      @range_seeds.flatten.collect { |seed| find_seed_location(seed) }.min
     end
 
     def parse_mapping(mapping_lines)
