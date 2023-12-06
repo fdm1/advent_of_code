@@ -3,7 +3,6 @@
 module Year2023
   class Day04 < AdventOfCode::PuzzleBase
     def part1
-      parse_input
       counts = @cards.collect do |numbers|
         (numbers[:actual] & numbers[:answers]).count
       end.reject(&:zero?)
@@ -15,7 +14,6 @@ module Year2023
     end
 
     def part2
-      parse_input
       @cards.each_with_index do |current_card, current_index|
         matches = (current_card[:actual] & current_card[:answers]).count
         @cards[current_index + 1..current_index + matches].each do |card|
@@ -25,7 +23,7 @@ module Year2023
       @cards.collect { |c| c[:copies] }.sum
     end
 
-    def parse_input
+    def setup
       @cards = []
       rows = @input.split("\n")
       cards = rows.map { |r| r.split(': ') }

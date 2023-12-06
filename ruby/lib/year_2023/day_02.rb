@@ -9,7 +9,7 @@ module Year2023
     }.freeze
 
     def part1
-      valid_games = games.filter do |_game_number, rounds|
+      valid_games = @games.filter do |_game_number, rounds|
         rounds.none? do |round|
           round.any? do |color, number|
             number > LIMITS[color]
@@ -20,13 +20,13 @@ module Year2023
     end
 
     def part2
-      games.collect do |_game_number, rounds|
+      @games.collect do |_game_number, rounds|
         game_power(rounds)
       end.sum
     end
 
-    def parse_input
-      @input.split("\n").to_h do |game|
+    def setup
+      @games = @input.split("\n").to_h do |game|
         parse_game(game)
       end
     end
@@ -56,10 +56,6 @@ module Year2023
         end
       end
       mins.values.reduce(:*)
-    end
-
-    def games
-      @games ||= parse_input
     end
   end
 end
