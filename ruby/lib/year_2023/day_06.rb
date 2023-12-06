@@ -7,5 +7,12 @@ module Year2023
 
     def part2
     end
+
+    def setup
+      times, distances = @input.split("\n").map(&:chomp)
+      times = times.split(":").last.split(" ").compact.map(&:to_i)
+      distances = distances.split(":").last.split(" ").compact.map(&:to_i)
+      @races = times.collect.with_index {|t, i| {time: t, distance: distances[i]}}
+    end
   end
 end
