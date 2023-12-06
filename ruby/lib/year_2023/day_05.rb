@@ -3,12 +3,10 @@
 module Year2023
   class Day05 < AdventOfCode::PuzzleBase
     def part1
-      setup
       @seeds.collect { |seed| find_seed_location(seed) }.min
     end
 
     def part2
-      setup
       @range_seeds = []
       @seeds.each_with_index do |seed, index|
         @range_seeds << Range.new(seed, seed + @seeds[index + 1]).to_a if index.even?

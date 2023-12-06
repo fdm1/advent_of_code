@@ -3,7 +3,6 @@
 module Year2023
   class Day03 < AdventOfCode::PuzzleBase
     def part1
-      parse_input
       @numbers.collect do |row_index, row|
         row.collect do |number_index, number|
           number if symbols_touching_number(row_index, number_index).length.positive?
@@ -12,7 +11,6 @@ module Year2023
     end
 
     def part2
-      parse_input
       valid_numbers = @numbers.collect do |row_index, row|
         row.collect do |number_index, number|
           matching_symbols = symbols_touching_number(row_index, number_index, '*')
@@ -51,7 +49,7 @@ module Year2023
       end.compact
     end
 
-    def parse_input
+    def setup
       rows = @input.split("\n")
       @symbols = {}
       @numbers = {}
