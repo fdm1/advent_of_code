@@ -11,6 +11,6 @@ module YearYEAR
     # setup gets called as part of initialize
     def setup
       @input # input is available as the raw input string
-    enb
+    end
   end
 end
