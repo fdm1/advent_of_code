@@ -51,9 +51,9 @@ module Year2023
 
     def use_jokers(hand)
       jokers = hand.select { |card| card == 11 }
-      most_common_card = hand.max_by { |card| hand.count(card) }
-      highest_card = hand.max
       new_hand = hand.reject { |card| card == 11 }
+      most_common_card = new_hand.max_by { |card| hand.count(card) }
+      highest_card = new_hand.max
       jokers.count.times do
         new_hand << if hand.count(most_common_card) == 1
                       highest_card
