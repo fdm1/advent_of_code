@@ -3,14 +3,24 @@
 module Year2023
   class Day07 < AdventOfCode::PuzzleBase
     def part1
+      determine_value
+    end
+
+    def part2
+      @hands.map do |hand|
+        hand[:type] = use_jokers(hand[:hand])
+      end
+      sort_hands({ 11 => 1 })
+      determine_value
+    end
+
+    def determine_value
       value = 0
       @hands.each_with_index do |hand, index|
         value += hand[:bid] * (index + 1)
       end
       value
     end
-
-    def part2; end
 
     HAND_TYPES = %i[
       five_of_a_kind
@@ -39,6 +49,21 @@ module Year2023
       end
     end
 
+    def use_jokers(hand)
+      jokers = hand.select { |card| card == 11 }
+      most_common_card = hand.max_by { |card| hand.count(card) }
+      highest_card = hand.max
+      new_hand = hand.reject { |card| card == 11 }
+      jokers.count.times do
+        new_hand << if hand.count(most_common_card) == 1
+                      highest_card
+                    else
+                      most_common_card
+                    end
+      end
+      determine_hand_value(new_hand)
+    end
+
     def determine_hand_value(hand)
       uniq_length = hand.uniq.length
       case uniq_length
@@ -63,11 +88,15 @@ module Year2023
       end
     end
 
-    def sort_hands
+    def sort_hands(value_overrides = {})
       sorted_hands = []
       HAND_TYPES.each do |hand_type|
         type_hands = @hands.select { |hand| hand[:type] == hand_type }
-        sorted_hands << type_hands.sort_by { |hand| hand[:hand].map(&:to_s).map { |n| n.rjust(2, '0') }.join }.reverse
+        sorted_hands << type_hands.sort_by do |hand|
+          hand[:hand].map do |h|
+            value_overrides[h] || h
+          end.map(&:to_s).map { |n| n.rjust(2, '0') }.join # rubocop:disable Style/MultilineBlockChain
+        end.reverse
       end
       @hands = sorted_hands.flatten.reverse
     end
