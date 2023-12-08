@@ -16,10 +16,8 @@ module Year2023
       steps = 0
       direction_index = 0
       current = start
-      seen = []
-      until current.end_with?(finish) || seen.include?("#{current}-#{direction_index}")
+      until current.end_with?(finish)
         steps += 1
-        seen << "#{current}-#{direction_index}"
         current = @network[current][@directions[direction_index]]
         direction_index = (direction_index + 1) % @directions.length
       end
