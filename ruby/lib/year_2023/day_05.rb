@@ -7,11 +7,18 @@ module Year2023
     end
 
     def part2
-      @range_seeds = []
+      range_seeds = []
       @seeds.each_with_index do |seed, index|
-        @range_seeds << Range.new(seed, seed + @seeds[index + 1]).to_a if index.even?
+        range_seeds << Range.new(seed, seed + @seeds[index + 1] - 1) if index.even?
       end
-      @range_seeds.flatten.collect { |seed| find_seed_location(seed) }.min
+      location = 0
+      puts range_seeds.sort_by(&:first)
+      loop do
+        seed = find_location_seed(location)
+        return location if range_seeds.any? { |r| r.include?(seed) }
+
+        location += 1
+      end
     end
 
     def parse_mapping(mapping_lines)
@@ -19,25 +26,45 @@ module Year2023
       @mappings[mapping_name] = []
       mapping_lines[1..].map do |mapping_line|
         destination, source, range = mapping_line.split.map(&:to_i)
-        @mappings[mapping_name] << { source_range: Range.new(source, source + range), destination_start: destination }
+        @mappings[mapping_name] << {
+          source_range: Range.new(source, source + range - 1),
+          destination_range: Range.new(destination, destination + range - 1)
+        }
       end
     end
 
-    def find_next_value(seed, mappings)
-      applicable_range = mappings.find { |mapping| mapping[:source_range].include?(seed) }
+    def find_next_value(seed, mapping_key)
+      applicable_range = @mappings[mapping_key].find { |mapping| mapping[:source_range].include?(seed) }
       return seed unless applicable_range
 
-      applicable_range[:destination_start] + (seed - applicable_range[:source_range].first)
+      applicable_range[:destination_range].first + (seed - applicable_range[:source_range].first)
     end
 
     def find_seed_location(seed)
-      soil = find_next_value(seed, @mappings[:seed_to_soil])
-      fertilizer = find_next_value(soil, @mappings[:soil_to_fertilizer])
-      water = find_next_value(fertilizer, @mappings[:fertilizer_to_water])
-      light = find_next_value(water, @mappings[:water_to_light])
-      temperature = find_next_value(light, @mappings[:light_to_temperature])
-      humidity = find_next_value(temperature, @mappings[:temperature_to_humidity])
-      find_next_value(humidity, @mappings[:humidity_to_location])
+      soil = find_next_value(seed, :seed_to_soil)
+      fertilizer = find_next_value(soil, :soil_to_fertilizer)
+      water = find_next_value(fertilizer, :fertilizer_to_water)
+      light = find_next_value(water, :water_to_light)
+      temperature = find_next_value(light, :light_to_temperature)
+      humidity = find_next_value(temperature, :temperature_to_humidity)
+      find_next_value(humidity, :humidity_to_location)
+    end
+
+    def find_previous_value(value, mapping_key)
+      applicable_range = @mappings[mapping_key].find { |mapping| mapping[:destination_range].include?(value) }
+      return value unless applicable_range
+
+      applicable_range[:source_range].first + (value - applicable_range[:destination_range].first)
+    end
+
+    def find_location_seed(location)
+      humidity = find_previous_value(location, :humidity_to_location)
+      temperature = find_previous_value(humidity, :temperature_to_humidity)
+      light = find_previous_value(temperature, :light_to_temperature)
+      water = find_previous_value(light, :water_to_light)
+      fertilizer = find_previous_value(water, :fertilizer_to_water)
+      soil = find_previous_value(fertilizer, :soil_to_fertilizer)
+      find_previous_value(soil, :seed_to_soil)
     end
 
     def setup
