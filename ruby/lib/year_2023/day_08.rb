@@ -3,26 +3,24 @@
 module Year2023
   class Day08 < AdventOfCode::PuzzleBase
     def part1
-      steps = 0
-      direction_index = 0
-      current = 'AAA'
-      while current != 'ZZZ'
-        steps += 1
-        current = @network[current][@directions[direction_index]]
-        direction_index = (direction_index + 1) % @directions.length
-      end
-      steps
+      find_path('AAA', 'ZZZ')
     end
 
     def part2
+      paths = @network.keys.select { |k| k.end_with?('A') }
+      distances = paths.to_h { |k| [k, find_path(k, 'Z')] }
+      distances.values.reduce(&:lcm)
+    end
+
+    def find_path(start, finish)
       steps = 0
       direction_index = 0
-      paths = @network.keys.select { |k| k.end_with?('A') }
-
-      # improvement idea: collect length to Z, and once we have that, do some math to find the shortest path?
-      until paths.all? { |p| p.end_with?('Z') }
+      current = start
+      seen = []
+      until current.end_with?(finish) || seen.include?("#{current}-#{direction_index}")
         steps += 1
-        paths = paths.collect { |path| @network[path][@directions[direction_index]] }
+        seen << "#{current}-#{direction_index}"
+        current = @network[current][@directions[direction_index]]
         direction_index = (direction_index + 1) % @directions.length
       end
       steps
