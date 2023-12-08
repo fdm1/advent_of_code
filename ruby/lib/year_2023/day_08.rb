@@ -14,7 +14,19 @@ module Year2023
       steps
     end
 
-    def part2; end
+    def part2
+      steps = 0
+      direction_index = 0
+      paths = @network.keys.select { |k| k.end_with?('A') }
+
+      # improvement idea: collect length to Z, and once we have that, do some math to find the shortest path?
+      until paths.all? { |p| p.end_with?('Z') }
+        steps += 1
+        paths = paths.collect { |path| @network[path][@directions[direction_index]] }
+        direction_index = (direction_index + 1) % @directions.length
+      end
+      steps
+    end
 
     # setup gets called as part of initialize
     def setup
