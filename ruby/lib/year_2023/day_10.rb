@@ -40,7 +40,8 @@ module Year2023
       end
 
       def update_direction(grid)
-        case grid[@y][@x]
+        grid_char = grid[@y] && grid[@y][@x]
+        case grid_char
         when '7'
           @direction = @direction == :right ? :down : :left
         when 'J'
@@ -64,7 +65,15 @@ module Year2023
       position1.steps - 1
     end
 
-    def part2; end
+    def part2
+      position1 = @positions.first
+      binding.pry
+      position1.move(@grid)
+      while position1.position != @start
+        position1.move(@grid)
+      end
+      @path = position1.visited
+    end
 
     def set_initial_positions
       point_above = [@start[0], @start[1] - 1]
@@ -78,12 +87,10 @@ module Year2023
       grid_right = @grid[point_right[0]][point_right[1]]
 
       @positions = []
-      @positions << Position.new(@start[0], @start[1], :up, @grid) if grid_above && grid_above != '.'
-      @positions << Position.new(@start[0], @start[1], :down, @grid) if grid_below && grid_below != '.'
-      @positions << Position.new(@start[0], @start[1], :left, @grid) if grid_left && grid_left != '.'
-      return unless grid_right && grid_right != '.'
-
-      @positions << Position.new(@start[0], @start[1], :right, @grid)
+      @positions << Position.new(@start[0], @start[1], :up, @grid) if grid_above && ['|', '7', 'F'].include?(grid_above)
+      @positions << Position.new(@start[0], @start[1], :down, @grid) if grid_below && ['|', 'J', 'L'].include?(grid_below)
+      @positions << Position.new(@start[0], @start[1], :left, @grid) if grid_left && ['-', 'L', 'F'].include?(grid_left)
+      @positions << Position.new(@start[0], @start[1], :right, @grid) if grid_right && ['-', '7', 'J'].include?(grid_right)
     end
 
     # setup gets called as part of initialize
