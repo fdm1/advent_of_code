@@ -18,6 +18,10 @@ RSpec.describe Year2023::Day10 do
       expect(puzzle_test_runner(year: 2023, day: 10, suffix: 'part2_short').part2).to eq(4)
     end
 
+    it 'solves part2 - short squeeze' do
+      expect(puzzle_test_runner(year: 2023, day: 10, suffix: 'part2_short_squeeze').part2).to eq(4)
+    end
+
     it 'solves part2 - longer' do
       expect(puzzle_test_runner(year: 2023, day: 10, suffix: 'part2_longer').part2).to eq(8)
     end

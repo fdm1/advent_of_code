@@ -33,14 +33,13 @@ module Year2023
         end
         update_marker(grid)
         update_direction(grid)
-
       end
 
       def update_marker(grid)
         @marker = grid[@x][@y]
       end
 
-      def update_direction(grid)
+      def update_direction(_grid)
         case @marker
         when '7'
           @direction = @direction == :right ? :down : :left
@@ -68,9 +67,7 @@ module Year2023
     def part2
       position1 = @positions.first
       position1.move(@grid)
-      while position1.position != @start
-        position1.move(@grid)
-      end
+      position1.move(@grid) while position1.position != @start
       count_internal_points(position1.visited)
     end
 
@@ -87,9 +84,11 @@ module Year2023
 
       @positions = []
       @positions << Position.new(@start[0], @start[1], :up, @grid) if grid_above && ['|', '7', 'F'].include?(grid_above)
-      @positions << Position.new(@start[0], @start[1], :down, @grid) if grid_below && ['|', 'J', 'L'].include?(grid_below)
+      @positions << Position.new(@start[0], @start[1], :down, @grid) if grid_below && ['|', 'J',
+                                                                                       'L'].include?(grid_below)
       @positions << Position.new(@start[0], @start[1], :left, @grid) if grid_left && ['-', 'L', 'F'].include?(grid_left)
-      @positions << Position.new(@start[0], @start[1], :right, @grid) if grid_right && ['-', '7', 'J'].include?(grid_right)
+      @positions << Position.new(@start[0], @start[1], :right, @grid) if grid_right && ['-', '7',
+                                                                                        'J'].include?(grid_right)
     end
 
     def expand_grid
@@ -106,24 +105,27 @@ module Year2023
       res << [point[0] + 1, point[1]] if @grid[point[0] + 1] && @grid[point[0] + 1][point[1]]
       res << [point[0], point[1] - 1] if point[1].positive? && @grid[point[0]][point[1] - 1]
       res << [point[0], point[1] + 1] if @grid[point[0]][point[1] + 1]
-      res.filter {|p| !path.include?(p) }
+      res.filter { |p| !path.include?(p) }
     end
 
     def count_internal_points(path)
       open_points = Set.new(@edge_points)
       closed_points = Set.new
-      @grid.each_with_index do |row, y|
-        row.each_with_index do |column, x|
+      @grid.each_with_index do |row, y| # rubocop:disable Metrics/BlockLength
+        row.each_with_index do |_column, x|
           current_point = [y, x]
           next if open_points.include?(current_point)
           next if path.include?(current_point)
-          adjacent_points = next_adjacent_points(current_point, path).filter {|p| !closed_points.include?(p) } + [current_point]
-          adjacent_points.map do |p|
+
+          adjacent_points = next_adjacent_points(current_point, path).filter do |p|
+            !closed_points.include?(p)
+          end + [current_point]
+          adjacent_points.map do |_p|
             points_checked = Set.new
 
             can_get_out = AdventOfCode::Algorithms::BFS.new(
               endpoint: current_point,
-              starting_points: open_points,
+              starting_points: open_points
             ).run_search! do |point|
               points_checked << point
               if closed_points.include?(point)
