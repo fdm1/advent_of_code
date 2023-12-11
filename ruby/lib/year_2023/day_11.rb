@@ -17,27 +17,38 @@ module Year2023
         @grid.each { |row| puts row.join }
 
       end
+      puts @extra_space
 
       find_galaxies
       puts "galaxies found"
-      find_total_distance
+      find_total_distance(@override_args[:size] || 1_000_000)
     end
 
-    def find_total_distance
+    def find_total_distance(expand_size = 1)
       total_distance = 0
       @galaxies.keys.reverse.each do |galaxy|
         other_galaxies = @galaxies.keys.reverse.filter { |k| k < galaxy }
         other_galaxies.each do |other_galaxy|
-          total_distance += find_distance(galaxy, other_galaxy)
+          total_distance += find_distance(galaxy, other_galaxy, expand_size)
         end
       end
       total_distance
     end
 
-    def find_distance(galaxy, other_galaxy)
+    def find_distance(galaxy, other_galaxy, expand_size = 1)
       g1 = @galaxies[galaxy]
       g2 = @galaxies[other_galaxy]
-      (g1[0] - g2[0]).abs + (g1[1] - g2[1]).abs
+      x_distance = (g1[0] - g2[0]).abs
+      y_distance = (g1[1] - g2[1]).abs
+
+      @extra_space[:columns].count { |column| column.between?(g1[0], g2[0]) }.times do
+        x_distance += expand_size
+      end
+      @extra_space[:rows].count { |row| row.between?(g1[1], g2[1]) }.times do
+        y_distance += expand_size
+      end
+      puts "galaxy #{galaxy} to galaxy #{other_galaxy} is #{x_distance} + #{y_distance} = #{x_distance + y_distance}"
+      x_distance + y_distance
     end
 
     def expand_grid(size = 1)
@@ -46,14 +57,14 @@ module Year2023
       @grid.first.each_with_index do |_cell, x|
         empty_columns << x if @grid.all? { |row| row[x] == '.' }
       end
-      empty_columns.reverse.each { |x| @grid.each { |row| size.times { row.insert(x, '.') } } }
 
       # tall
       empty_rows = []
       @grid.each_with_index do |row, y|
         empty_rows << y if row.all? { |cell| cell == '.' }
       end
-      empty_rows.reverse.each { |y| size.times { @grid.insert(y, Array.new(@grid.first.length, '.')) } }
+      # empty_rows.reverse.each { |y| size.times { @grid.insert(y, Array.new(@grid.first.length, '.')) } }
+      @extra_space = { rows: empty_rows, columns: empty_columns }
     end
 
     def find_galaxies
