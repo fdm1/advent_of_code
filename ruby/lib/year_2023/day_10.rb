@@ -23,25 +23,25 @@ module Year2023
         @visited << position
         case @direction
         when :up
-          @y -= 1
-        when :down
-          @y += 1
-        when :left
           @x -= 1
-        when :right
+        when :down
           @x += 1
+        when :left
+          @y -= 1
+        when :right
+          @y += 1
         end
-        update_direction(grid)
         update_marker(grid)
+        update_direction(grid)
+
       end
 
       def update_marker(grid)
-        @marker = grid[@y][@x]
+        @marker = grid[@x][@y]
       end
 
       def update_direction(grid)
-        grid_char = grid[@y] && grid[@y][@x]
-        case grid_char
+        case @marker
         when '7'
           @direction = @direction == :right ? :down : :left
         when 'J'
@@ -67,7 +67,6 @@ module Year2023
 
     def part2
       position1 = @positions.first
-      binding.pry
       position1.move(@grid)
       while position1.position != @start
         position1.move(@grid)
@@ -76,17 +75,16 @@ module Year2023
     end
 
     def set_initial_positions
-      point_above = [@start[0], @start[1] - 1]
-      point_below = [@start[0], @start[1] + 1]
-      point_left = [@start[0] - 1, @start[1]]
-      point_right = [@start[0] + 1, @start[1]]
+      point_left = [@start[0], @start[1] - 1]
+      point_right = [@start[0], @start[1] + 1]
+      point_above = [@start[0] - 1, @start[1]]
+      point_below = [@start[0] + 1, @start[1]]
 
       grid_above = @grid[point_above[0]] && @grid[point_above[0]][point_above[1]]
-      grid_below = @grid[point_below[0]] && @grid[point_below[0]][point_below[1]]
-      grid_left = @grid[point_left[0]] && @grid[point_left[0]][point_left[1]]
       grid_right = @grid[point_right[0]] && @grid[point_right[0]][point_right[1]]
+      grid_left = @grid[point_left[0]] && @grid[point_left[0]][point_left[1]]
+      grid_below = @grid[point_below[0]] && @grid[point_below[0]][point_below[1]]
 
-      binding.pry
       @positions = []
       @positions << Position.new(@start[0], @start[1], :up, @grid) if grid_above && ['|', '7', 'F'].include?(grid_above)
       @positions << Position.new(@start[0], @start[1], :down, @grid) if grid_below && ['|', 'J', 'L'].include?(grid_below)
@@ -98,8 +96,8 @@ module Year2023
     def setup
       @grid = @input.split("\n").map(&:chars)
       @grid.each_with_index do |row, y|
-        start = row.index('S')
-        @start = [start, y] if start
+        x = row.index('S')
+        @start = [y, x] if x
       end
       set_initial_positions
     end

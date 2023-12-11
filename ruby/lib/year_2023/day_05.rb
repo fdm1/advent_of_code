@@ -12,7 +12,6 @@ module Year2023
         range_seeds << Range.new(seed, seed + @seeds[index + 1] - 1) if index.even?
       end
       location = 0
-      puts range_seeds.sort_by(&:first)
       loop do
         seed = find_location_seed(location)
         return location if range_seeds.any? { |r| r.include?(seed) }
