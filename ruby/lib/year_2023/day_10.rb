@@ -81,11 +81,12 @@ module Year2023
       point_left = [@start[0] - 1, @start[1]]
       point_right = [@start[0] + 1, @start[1]]
 
-      grid_above = @grid[point_above[0]][point_above[1]]
-      grid_below = @grid[point_below[0]][point_below[1]]
-      grid_left = @grid[point_left[0]][point_left[1]]
-      grid_right = @grid[point_right[0]][point_right[1]]
+      grid_above = @grid[point_above[0]] && @grid[point_above[0]][point_above[1]]
+      grid_below = @grid[point_below[0]] && @grid[point_below[0]][point_below[1]]
+      grid_left = @grid[point_left[0]] && @grid[point_left[0]][point_left[1]]
+      grid_right = @grid[point_right[0]] && @grid[point_right[0]][point_right[1]]
 
+      binding.pry
       @positions = []
       @positions << Position.new(@start[0], @start[1], :up, @grid) if grid_above && ['|', '7', 'F'].include?(grid_above)
       @positions << Position.new(@start[0], @start[1], :down, @grid) if grid_below && ['|', 'J', 'L'].include?(grid_below)
