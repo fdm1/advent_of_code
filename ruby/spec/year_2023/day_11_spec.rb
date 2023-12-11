@@ -9,9 +9,13 @@ RSpec.describe Year2023::Day11 do
     end
   end
 
-  xdescribe 'part2' do
-    it 'solves part2' do
-      expect(puzzle_test_runner(year: 2023, day: 11).part2).to eq(2)
+  describe 'part2' do
+    it 'solves part2 - size 10' do
+      expect(puzzle_test_runner(year: 2023, day: 11, override_args: { size: 10 }).part2).to eq(1030)
+    end
+
+    it 'solves part2 - size 100' do
+      expect(puzzle_test_runner(year: 2023, day: 11, override_args: { size: 100 }).part2).to eq(8410)
     end
   end
 end
