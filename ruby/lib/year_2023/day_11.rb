@@ -3,25 +3,11 @@
 module Year2023
   class Day11 < AdventOfCode::PuzzleBase
     def part1
-      expand_grid
-      find_galaxies
       find_total_distance
     end
 
     def part2
-      expand_grid(@override_args[:size] || 1_000_000)
-
-      puts "grid expanded"
-      if @override_args[:size] == 10
-        puts
-        @grid.each { |row| puts row.join }
-
-      end
-      puts @extra_space
-
-      find_galaxies
-      puts "galaxies found"
-      find_total_distance(@override_args[:size] || 1_000_000)
+      find_total_distance((@override_args[:size] || 1_000_000) - 1)
     end
 
     def find_total_distance(expand_size = 1)
@@ -41,29 +27,23 @@ module Year2023
       x_distance = (g1[0] - g2[0]).abs
       y_distance = (g1[1] - g2[1]).abs
 
-      @extra_space[:columns].count { |column| column.between?(g1[0], g2[0]) }.times do
+      x_points = [g1[0], g2[0]].sort
+      y_points = [g1[1], g2[1]].sort
+
+      @extra_space[:columns].count { |column| column.between?(x_points.first, x_points.last) }.times do
         x_distance += expand_size
       end
-      @extra_space[:rows].count { |row| row.between?(g1[1], g2[1]) }.times do
+
+      @extra_space[:rows].count { |row| row.between?(y_points.first, y_points.last) }.times do
         y_distance += expand_size
       end
-      puts "galaxy #{galaxy} to galaxy #{other_galaxy} is #{x_distance} + #{y_distance} = #{x_distance + y_distance}"
+
       x_distance + y_distance
     end
 
-    def expand_grid(size = 1)
-      # wide
-      empty_columns = []
-      @grid.first.each_with_index do |_cell, x|
-        empty_columns << x if @grid.all? { |row| row[x] == '.' }
-      end
-
-      # tall
-      empty_rows = []
-      @grid.each_with_index do |row, y|
-        empty_rows << y if row.all? { |cell| cell == '.' }
-      end
-      # empty_rows.reverse.each { |y| size.times { @grid.insert(y, Array.new(@grid.first.length, '.')) } }
+    def expand_grid
+      empty_columns = @grid.first.length.times.collect { |x| @grid.all? { |row| row[x] == '.' } ? x : nil }.compact
+      empty_rows = @grid.each_with_index.collect { |row, y| row.all? { |cell| cell == '.' } ? y : nil }.compact
       @extra_space = { rows: empty_rows, columns: empty_columns }
     end
 
@@ -83,6 +63,8 @@ module Year2023
     # setup gets called as part of initialize
     def setup
       @grid = @input.split("\n").map(&:chars)
+      expand_grid
+      find_galaxies
     end
   end
 end
