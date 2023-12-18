@@ -10,7 +10,10 @@ module Year2023
 
     # setup gets called as part of initialize
     def setup
-      @input # input is available as the raw input string
+      @springs = @input.split("\n").map do |r|
+        springs, counts = r.split(" ")
+        { springs: springs, counts: counts.split(",").map(&:to_i)}
+      end
     end
   end
 end
