@@ -44,7 +44,7 @@ module Year2015
       return if direction.select { |d| d.match(/[a-z]/) }.any? { |w| wires[w].nil? }
 
       if direction.count == 1
-        wires[target] = wires[direction.last] || direction.last.to_i  # assign
+        wires[target] = wires[direction.last] || direction.last.to_i # assign
         @processed_rows << row
         return
       else

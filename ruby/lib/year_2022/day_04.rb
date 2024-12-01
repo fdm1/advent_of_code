@@ -22,7 +22,7 @@ module Year2022
     def part2
       @input.split("\n").count do |row|
         range1, range2 = parse_ranges(row)
-        !(range1.to_a & range2.to_a).empty?
+        !!range1.to_a.intersect?(range2.to_a)
       end
     end
   end

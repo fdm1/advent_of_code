@@ -10,7 +10,7 @@ module Year2024
 
     def part2
       @left.collect do |i|
-        @right.filter {|r| r == i}.length * i
+        @right.filter { |r| r == i }.length * i
       end.sum
     end
 

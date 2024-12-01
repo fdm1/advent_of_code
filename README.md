@@ -12,6 +12,7 @@ Repo for working through [Advent of Code](http://adventofcode.com)
 - ![badge](https://img.shields.io/endpoint?label=2021%20Stars%20%E2%AD%90&url=https%3A%2F%2Fgist.githubusercontent.com%2Ffdm1%2F88c3907f142f24c32e91ce1dc79729f3%2Fraw%2Faoc_stars_2021.json)
 - ![badge](https://img.shields.io/endpoint?label=2022%20Stars%20%E2%AD%90&url=https%3A%2F%2Fgist.githubusercontent.com%2Ffdm1%2F88c3907f142f24c32e91ce1dc79729f3%2Fraw%2Faoc_stars_2022.json)
 - ![badge](https://img.shields.io/endpoint?label=2023%20Stars%20%E2%AD%90&url=https%3A%2F%2Fgist.githubusercontent.com%2Ffdm1%2F88c3907f142f24c32e91ce1dc79729f3%2Fraw%2Faoc_stars_2023.json)
+- ![badge](https://img.shields.io/endpoint?label=2024%20Stars%20%E2%AD%90&url=https%3A%2F%2Fgist.githubusercontent.com%2Ffdm1%2F88c3907f142f24c32e91ce1dc79729f3%2Fraw%2Faoc_stars_2024.json)
 
 ### Attempted in various languages
 

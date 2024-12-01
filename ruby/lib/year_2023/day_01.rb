@@ -42,7 +42,7 @@ module Year2023
     end
 
     def get_digit(string_row:, reverse: false)
-      pattern = /(#{NUMBERS.keys.map { |k| reverse ? k.reverse : k }.join("|")}|[[:digit:]])/
+      pattern = /(#{NUMBERS.keys.map { |k| reverse ? k.reverse : k }.join('|')}|[[:digit:]])/
       string_row = string_row.reverse if reverse
       match = string_row.match(pattern).match(0)
       return match if char_is_numeric?(match)

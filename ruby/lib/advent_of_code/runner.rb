@@ -32,7 +32,7 @@ module AdventOfCode
     def time_run
       start = Time.now
       res = yield
-      if input_path  # tests
+      if input_path # tests
         res
       else
         "Result: #{res}\nRun time: (#{Time.now - start} seconds)"
