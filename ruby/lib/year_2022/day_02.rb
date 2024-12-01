@@ -46,7 +46,8 @@ module Year2022
 
       return :paper if other_shape == :rock
       return :scissors if other_shape == :paper
-      return :rock if other_shape == :scissors
+
+      :rock if other_shape == :scissors
     end
 
     def part1

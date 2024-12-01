@@ -4,7 +4,7 @@ module Year2022
   class Day11 < AdventOfCode::PuzzleBase
     def part1
       20.times do |_i|
-        @monkeys.each do |_monkey_n, monkey|
+        @monkeys.each_value do |monkey|
           run_monkey(monkey, divide_by_three: true)
         end
       end
@@ -14,7 +14,7 @@ module Year2022
 
     def part2
       10_000.times do |_i|
-        @monkeys.each do |_monkey_n, monkey|
+        @monkeys.each_value do |monkey|
           run_monkey(monkey)
         end
       end
