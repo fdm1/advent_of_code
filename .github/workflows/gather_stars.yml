@@ -11,13 +11,13 @@ jobs:
     steps:
     - name: Download Leaderboards
       run: |
-        for YEAR in `seq 2015 2023`; do
+        for YEAR in `seq 2015 2024`; do
           http --download GET https://adventofcode.com/$YEAR/leaderboard/private/view/${{ secrets.AOC_USERID }}.json "${{ secrets.AOC_USER_AGENT }}" Cookie:session=${{ secrets.AOC_SESSION }} >> $YEAR.json
           echo STARS_$YEAR=$(cat $YEAR.json | jq ".members[\"${{ secrets.AOC_USERID }}\"].stars") >> $GITHUB_ENV
         done
         echo TOTAL_STARS=$(cat *.json | jq ".members[\"${{ secrets.AOC_USERID }}\"].stars" | jq -s '. | add') >> $GITHUB_ENV
     - name: Create Awesome Badge - 2015
-      uses: schneegans/dynamic-badges-action@v1.6.0
+      uses: schneegans/dynamic-badges-action@v1.7.0
       with:
         auth: ${{ secrets.GIST_SECRET }}
         gistID: ${{ secrets.GIST_ID }}
@@ -26,7 +26,7 @@ jobs:
         message: ${{ env.STARS_2015 }}
         color: yellow
     - name: Create Awesome Badge - 2016
-      uses: schneegans/dynamic-badges-action@v1.6.0
+      uses: schneegans/dynamic-badges-action@v1.7.0
       with:
         auth: ${{ secrets.GIST_SECRET }}
         gistID: ${{ secrets.GIST_ID }}
@@ -35,7 +35,7 @@ jobs:
         message: ${{ env.STARS_2016 }}
         color: yellow
     - name: Create Awesome Badge - 2017
-      uses: schneegans/dynamic-badges-action@v1.6.0
+      uses: schneegans/dynamic-badges-action@v1.7.0
       with:
         auth: ${{ secrets.GIST_SECRET }}
         gistID: ${{ secrets.GIST_ID }}
@@ -44,7 +44,7 @@ jobs:
         message: ${{ env.STARS_2017 }}
         color: yellow
     - name: Create Awesome Badge - 2018
-      uses: schneegans/dynamic-badges-action@v1.6.0
+      uses: schneegans/dynamic-badges-action@v1.7.0
       with:
         auth: ${{ secrets.GIST_SECRET }}
         gistID: ${{ secrets.GIST_ID }}
@@ -53,7 +53,7 @@ jobs:
         message: ${{ env.STARS_2018 }}
         color: yellow
     - name: Create Awesome Badge - 2019
-      uses: schneegans/dynamic-badges-action@v1.6.0
+      uses: schneegans/dynamic-badges-action@v1.7.0
       with:
         auth: ${{ secrets.GIST_SECRET }}
         gistID: ${{ secrets.GIST_ID }}
@@ -62,7 +62,7 @@ jobs:
         message: ${{ env.STARS_2019 }}
         color: yellow
     - name: Create Awesome Badge - 2020
-      uses: schneegans/dynamic-badges-action@v1.6.0
+      uses: schneegans/dynamic-badges-action@v1.7.0
       with:
         auth: ${{ secrets.GIST_SECRET }}
         gistID: ${{ secrets.GIST_ID }}
@@ -71,7 +71,7 @@ jobs:
         message: ${{ env.STARS_2020 }}
         color: yellow
     - name: Create Awesome Badge - 2021
-      uses: schneegans/dynamic-badges-action@v1.6.0
+      uses: schneegans/dynamic-badges-action@v1.7.0
       with:
         auth: ${{ secrets.GIST_SECRET }}
         gistID: ${{ secrets.GIST_ID }}
@@ -80,7 +80,7 @@ jobs:
         message: ${{ env.STARS_2021 }}
         color: yellow
     - name: Create Awesome Badge - 2022
-      uses: schneegans/dynamic-badges-action@v1.6.0
+      uses: schneegans/dynamic-badges-action@v1.7.0
       with:
         auth: ${{ secrets.GIST_SECRET }}
         gistID: ${{ secrets.GIST_ID }}
@@ -89,7 +89,7 @@ jobs:
         message: ${{ env.STARS_2022 }}
         color: yellow
     - name: Create Awesome Badge - 2023
-      uses: schneegans/dynamic-badges-action@v1.6.0
+      uses: schneegans/dynamic-badges-action@v1.7.0
       with:
         auth: ${{ secrets.GIST_SECRET }}
         gistID: ${{ secrets.GIST_ID }}
@@ -97,8 +97,17 @@ jobs:
         label: '2023 Stars'
         message: ${{ env.STARS_2023 }}
         color: yellow
+    - name: Create Awesome Badge - 2024
+      uses: schneegans/dynamic-badges-action@v1.7.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: ${{ secrets.GIST_ID }}
+        filename: aoc_stars_2024.json
+        label: '2024 Stars'
+        message: ${{ env.STARS_2024 }}
+        color: yellow
     - name: Create Awesome Badge - Total
-      uses: schneegans/dynamic-badges-action@v1.6.0
+      uses: schneegans/dynamic-badges-action@v1.7.0
       with:
         auth: ${{ secrets.GIST_SECRET }}
         gistID: ${{ secrets.GIST_ID }}
