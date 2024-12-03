@@ -11,7 +11,7 @@ module Year2024
     end
 
     def part2
-      generate_answer
+      generate_answer(clean_input)
     end
 
     # setup generates called as part of initialize
@@ -35,8 +35,8 @@ module Year2024
       instructions.split("don't").first
     end
 
-    def extract_mults
-      mults = clean_input.scan(MULT_REGEX)
+    def extract_mults(input)
+      mults = input.scan(MULT_REGEX)
       mults.map { |m| parse_mult(m) }
     end
 
@@ -44,8 +44,8 @@ module Year2024
       m.gsub('mul(', '').gsub(')', '').split(',').map(&:to_i)
     end
 
-    def generate_answer
-      extract_mults.map { |a, b| a * b }.sum
+    def generate_answer(input = @input)
+      extract_mults(input).map { |a, b| a * b }.sum
     end
   end
 end
